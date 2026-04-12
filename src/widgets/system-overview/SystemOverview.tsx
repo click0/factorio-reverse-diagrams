@@ -45,8 +45,8 @@ export default function SystemOverview() {
             className={`btn ${activeLoops.has(loop.id) ? 'active' : ''}`}
             style={activeLoops.has(loop.id) ? { background: loop.color + '30', borderColor: loop.color, color: loop.color } : {}}
             onClick={() => toggleLoop(loop.id)}
-            title={loop.description}>
-            {loop.name}
+            title={t(`system.loop.${loop.id}.desc`)}>
+            {t(`system.loop.${loop.id}`)}
           </button>
         ))}
         {activeLoops.size > 0 && (
@@ -77,7 +77,6 @@ export default function SystemOverview() {
           const y1 = from.y + ny * (NODE_R + 2)
           const x2 = to.x - nx * (NODE_R + 8)
           const y2 = to.y - ny * (NODE_R + 8)
-          // Slight curve
           const mx = (x1 + x2) / 2 + ny * 15
           const my = (y1 + y2) / 2 - nx * 15
 
@@ -113,7 +112,7 @@ export default function SystemOverview() {
                 strokeWidth={isSelected || isHovered ? 2.5 : 1.5} />
               <text x={n.x} y={n.y - 2} textAnchor="middle" dominantBaseline="middle"
                 fill={visible ? '#ffffffdd' : '#ffffff30'} fontSize={10} fontWeight="bold" fontFamily="sans-serif">
-                {n.label}
+                {t(`system.node.${n.id}`)}
               </text>
               <text x={n.x} y={n.y + 12} textAnchor="middle"
                 fill={n.partColor + '80'} fontSize={8} fontFamily="monospace">
@@ -129,10 +128,10 @@ export default function SystemOverview() {
         <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border)', borderRadius: 6, padding: 16, marginTop: 12 }}>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 6 }}>
             <span style={{ width: 10, height: 10, borderRadius: '50%', background: selectedInfo.partColor }} />
-            <strong style={{ color: 'var(--accent)' }}>{selectedInfo.label}</strong>
+            <strong style={{ color: 'var(--accent)' }}>{t(`system.node.${selectedInfo.id}`)}</strong>
             <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>Part {selectedInfo.part}</span>
           </div>
-          <p style={{ fontSize: 13, color: 'var(--text-secondary)', margin: 0 }}>{selectedInfo.description}</p>
+          <p style={{ fontSize: 13, color: 'var(--text-secondary)', margin: 0 }}>{t(`system.node.${selectedInfo.id}.desc`)}</p>
           <div style={{ marginTop: 8, fontSize: 11, color: 'var(--text-muted)' }}>
             {t('system.connections')}: {EDGES.filter(e => e.from === selectedInfo.id || e.to === selectedInfo.id).length}
           </div>
@@ -144,8 +143,8 @@ export default function SystemOverview() {
         <div style={{ marginTop: 12, display: 'flex', flexDirection: 'column', gap: 6 }}>
           {LOOPS.filter(l => activeLoops.has(l.id)).map(l => (
             <div key={l.id} style={{ background: l.color + '10', border: `1px solid ${l.color}30`, borderRadius: 6, padding: '8px 12px' }}>
-              <span style={{ color: l.color, fontWeight: 600, fontSize: 13 }}>{l.name}:</span>{' '}
-              <span style={{ color: 'var(--text-secondary)', fontSize: 12 }}>{l.description}</span>
+              <span style={{ color: l.color, fontWeight: 600, fontSize: 13 }}>{t(`system.loop.${l.id}`)}:</span>{' '}
+              <span style={{ color: 'var(--text-secondary)', fontSize: 12 }}>{t(`system.loop.${l.id}.desc`)}</span>
             </div>
           ))}
         </div>
