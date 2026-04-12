@@ -2,6 +2,10 @@ import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import WidgetShell from '../components/WidgetShell/WidgetShell'
 import BeltSimulator from '../widgets/belt-simulator/BeltSimulator'
+import PollutionHeatmap from '../widgets/pollution-heatmap/PollutionHeatmap'
+import QualityMarkov from '../widgets/quality-markov/QualityMarkov'
+import RecipeDAG from '../widgets/recipe-dag/RecipeDAG'
+import SystemOverview from '../widgets/system-overview/SystemOverview'
 
 const widgetMeta: Record<string, { titleKey: string }> = {
   'belt-simulator': { titleKey: 'belt.title' },
@@ -24,10 +28,12 @@ function WidgetPlaceholder() {
 
 function getWidget(widgetId: string) {
   switch (widgetId) {
-    case 'belt-simulator':
-      return <BeltSimulator />
-    default:
-      return <WidgetPlaceholder />
+    case 'belt-simulator': return <BeltSimulator />
+    case 'pollution-heatmap': return <PollutionHeatmap />
+    case 'quality-markov': return <QualityMarkov />
+    case 'recipe-dag': return <RecipeDAG />
+    case 'system-overview': return <SystemOverview />
+    default: return <WidgetPlaceholder />
   }
 }
 
