@@ -20,6 +20,9 @@ import NoiseVisualizer from '../widgets/noise-visualizer/NoiseVisualizer'
 import SpacePlatform from '../widgets/space-platform/SpacePlatform'
 import CombinatorSandbox from '../widgets/combinator-sandbox/CombinatorSandbox'
 import TrainPathfinding from '../widgets/train-pathfinding/TrainPathfinding'
+import GameTick from '../widgets/game-tick/GameTick'
+import DefenseCalculator from '../widgets/defense-calculator/DefenseCalculator'
+import RobotLogistics from '../widgets/robot-logistics/RobotLogistics'
 
 const DIAGRAM_ORDER = [
   'belt-simulator',
@@ -41,6 +44,9 @@ const DIAGRAM_ORDER = [
   'space-platform',
   'combinator-sandbox',
   'train-pathfinding',
+  'game-tick',
+  'defense-calculator',
+  'robot-logistics',
 ]
 
 const widgetMeta: Record<string, { titleKey: string }> = {
@@ -63,6 +69,9 @@ const widgetMeta: Record<string, { titleKey: string }> = {
   'space-platform': { titleKey: 'space.title' },
   'combinator-sandbox': { titleKey: 'circuit.title' },
   'train-pathfinding': { titleKey: 'trainPath.title' },
+  'game-tick': { titleKey: 'gameTick.title' },
+  'defense-calculator': { titleKey: 'defense.title' },
+  'robot-logistics': { titleKey: 'robots.title' },
 }
 
 function WidgetPlaceholder() {
@@ -97,6 +106,9 @@ function getWidget(widgetId: string) {
     case 'space-platform': return <SpacePlatform />
     case 'combinator-sandbox': return <CombinatorSandbox />
     case 'train-pathfinding': return <TrainPathfinding />
+    case 'game-tick': return <GameTick />
+    case 'defense-calculator': return <DefenseCalculator />
+    case 'robot-logistics': return <RobotLogistics />
     default: return <WidgetPlaceholder />
   }
 }

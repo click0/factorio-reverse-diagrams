@@ -116,6 +116,24 @@ const diagrams = [
     descKey: 'trainPath.description',
     tags: ['trainPath.tag.trains', 'trainPath.tag.signals'],
   },
+  {
+    id: 'game-tick',
+    titleKey: 'gameTick.title',
+    descKey: 'gameTick.description',
+    tags: ['gameTick.tag.core', 'gameTick.tag.tick'],
+  },
+  {
+    id: 'defense-calculator',
+    titleKey: 'defense.title',
+    descKey: 'defense.description',
+    tags: ['defense.tag.combat', 'defense.tag.calculator'],
+  },
+  {
+    id: 'robot-logistics',
+    titleKey: 'robots.title',
+    descKey: 'robots.description',
+    tags: ['robots.tag.logistics', 'robots.tag.robots'],
+  },
 ]
 
 export default function Home() {
