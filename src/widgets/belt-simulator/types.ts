@@ -13,9 +13,24 @@ export interface BeltTier {
   slotsPerTile: number
 }
 
+export type Scenario = 'straight' | 'sideload' | 'splitter'
+
+export interface SplitterConfig {
+  inputPriority: 'none' | 'left' | 'right'
+  outputPriority: 'none' | 'left' | 'right'
+}
+
 export interface BeltState {
   topLane: (Item | null)[]
   bottomLane: (Item | null)[]
+  /** Side-load: perpendicular belt feeding into the main belt */
+  sideInput: (Item | null)[]
+  /** Splitter: second output belt top lane */
+  splitOutTopA: (Item | null)[]
+  splitOutBottomA: (Item | null)[]
+  splitOutTopB: (Item | null)[]
+  splitOutBottomB: (Item | null)[]
+  splitterToggle: boolean
   tick: number
 }
 
@@ -28,25 +43,7 @@ export const ITEMS: Record<ItemType, Item> = {
 }
 
 export const BELT_TIERS: BeltTier[] = [
-  {
-    name: 'Yellow',
-    color: '#e9c73e',
-    itemsPerSecond: 15,
-    tilesPerTick: 0.03125,
-    slotsPerTile: 4.571,
-  },
-  {
-    name: 'Red',
-    color: '#e04040',
-    itemsPerSecond: 30,
-    tilesPerTick: 0.0625,
-    slotsPerTile: 4.571,
-  },
-  {
-    name: 'Blue',
-    color: '#4080e0',
-    itemsPerSecond: 45,
-    tilesPerTick: 0.09375,
-    slotsPerTile: 4.571,
-  },
+  { name: 'Yellow', color: '#e9c73e', itemsPerSecond: 15, tilesPerTick: 0.03125, slotsPerTile: 4.571 },
+  { name: 'Red', color: '#e04040', itemsPerSecond: 30, tilesPerTick: 0.0625, slotsPerTile: 4.571 },
+  { name: 'Blue', color: '#4080e0', itemsPerSecond: 45, tilesPerTick: 0.09375, slotsPerTile: 4.571 },
 ]
