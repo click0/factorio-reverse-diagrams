@@ -34,6 +34,16 @@ export default function PollutionHeatmap() {
     return `rgba(${r},${g},${b},${a})`
   }
 
+  const tickLabel = t('pollution.tick')
+  const maxPLabel = t('pollution.maxPollution')
+  const entityNames = [
+    t('pollution.ent.boiler'),
+    t('pollution.ent.steamEngine'),
+    t('pollution.ent.assembler'),
+    t('pollution.ent.miningDrill'),
+    t('pollution.ent.furnace'),
+  ]
+
   const draw = useCallback((ctx: CanvasRenderingContext2D, st: PollutionState) => {
     ctx.fillStyle = '#0d1117'
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
@@ -78,7 +88,7 @@ export default function PollutionHeatmap() {
     const maxP = Math.max(...Array.from(st.grid))
     ctx.fillStyle = '#ffffff70'
     ctx.font = '11px monospace'
-    ctx.fillText(`Tick ${st.tick} | Max pollution: ${maxP.toFixed(4)}`, PAD, ctx.canvas.height - 4)
+    ctx.fillText(`${tickLabel} ${st.tick} | ${maxPLabel}: ${maxP.toFixed(4)}`, PAD, ctx.canvas.height - 4)
   }, [])
 
   useEffect(() => {
@@ -136,7 +146,7 @@ export default function PollutionHeatmap() {
         {tool === 'entity' ? (
           <div className="control-group">
             <select value={selectedEntity} onChange={(e) => setSelectedEntity(Number(e.target.value))}>
-              {ENTITIES.map((ent, i) => <option key={i} value={i}>{ent.name} ({ent.pollutionPerMinute}/min)</option>)}
+              {ENTITIES.map((_, i) => <option key={i} value={i}>{entityNames[i]} ({ENTITIES[i].pollutionPerMinute}/min)</option>)}
             </select>
           </div>
         ) : (

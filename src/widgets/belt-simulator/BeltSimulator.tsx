@@ -53,7 +53,11 @@ export default function BeltSimulator() {
     }
   }
 
-  const draw = useCallback((ctx: CanvasRenderingContext2D, st: BeltState, bt: BeltTier) => {
+  const tierLabel = t(`belt.${tier.id}`)
+  const itemsLabel = t('belt.itemsPerSec')
+  const tickLabel = t('belt.tick')
+
+  const draw = useCallback((ctx: CanvasRenderingContext2D, st: BeltState, bt: BeltTier, tLabel: string, iLabel: string, tkLabel: string) => {
     ctx.fillStyle = '#0d1117'
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
 
@@ -130,14 +134,14 @@ export default function BeltSimulator() {
     // Info line
     ctx.fillStyle = '#ffffff70'
     ctx.font = '11px monospace'
-    ctx.fillText(`${bt.name} | ${bt.itemsPerSecond} items/s | Tick ${st.tick}`, PAD, ctx.canvas.height - 5)
+    ctx.fillText(`${tLabel} | ${bt.itemsPerSecond} ${iLabel} | ${tkLabel} ${st.tick}`, PAD, ctx.canvas.height - 5)
   }, [scenario, slots, sideSlots])
 
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
     const ctx = canvas.getContext('2d')
-    if (ctx) draw(ctx, state, tier)
+    if (ctx) draw(ctx, state, tier, tierLabel, itemsLabel, tickLabel)
   }, [state, tier, draw])
 
   useEffect(() => {
@@ -169,9 +173,9 @@ export default function BeltSimulator() {
         <div className="control-group">
           <label>{t('belt.tier')}:</label>
           {BELT_TIERS.map((bt, i) => (
-            <button key={bt.name} className={`btn ${i === tierIdx ? 'active' : ''}`}
+            <button key={bt.id} className={`btn ${i === tierIdx ? 'active' : ''}`}
               style={{ borderColor: i === tierIdx ? bt.color : undefined, color: i === tierIdx ? bt.color : undefined }}
-              onClick={() => changeTier(i)}>{bt.name}</button>
+              onClick={() => changeTier(i)}>{t(`belt.${bt.id}`)}</button>
           ))}
         </div>
         <div className="control-group">

@@ -116,7 +116,7 @@ export default function SystemOverview() {
               </text>
               <text x={n.x} y={n.y + 12} textAnchor="middle"
                 fill={n.partColor + '80'} fontSize={8} fontFamily="monospace">
-                Part {n.part}
+                {t('system.part')} {n.part}
               </text>
             </g>
           )
@@ -129,7 +129,7 @@ export default function SystemOverview() {
           <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 6 }}>
             <span style={{ width: 10, height: 10, borderRadius: '50%', background: selectedInfo.partColor }} />
             <strong style={{ color: 'var(--accent)' }}>{t(`system.node.${selectedInfo.id}`)}</strong>
-            <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>Part {selectedInfo.part}</span>
+            <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>{t('system.part')} {selectedInfo.part}</span>
           </div>
           <p style={{ fontSize: 13, color: 'var(--text-secondary)', margin: 0 }}>{t(`system.node.${selectedInfo.id}.desc`)}</p>
           <div style={{ marginTop: 8, fontSize: 11, color: 'var(--text-muted)' }}>

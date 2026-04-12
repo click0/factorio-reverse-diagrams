@@ -29,7 +29,7 @@ export default function QualityMarkov() {
         <div className="control-group">
           <label>{t('quality.module')}:</label>
           <select value={config.moduleIdx} onChange={(e) => setConfig({ ...config, moduleIdx: Number(e.target.value) })}>
-            {QUALITY_MODULES.map((m, i) => <option key={i} value={i}>{m.name} ({m.qualityChance}%)</option>)}
+            {QUALITY_MODULES.map((m, i) => <option key={i} value={i}>{t(`quality.mod${i + 1}`)} ({m.qualityChance}%)</option>)}
           </select>
         </div>
         <div className="control-group">
@@ -41,7 +41,7 @@ export default function QualityMarkov() {
         <div className="control-group">
           <label>{t('quality.target')}:</label>
           <select value={targetTier} onChange={(e) => setTargetTier(Number(e.target.value))}>
-            {QUALITY_TIERS.map((tier, i) => i > 0 && <option key={i} value={i}>{tier}</option>)}
+            {QUALITY_TIERS.map((tier, i) => i > 0 && <option key={i} value={i}>{t(`quality.tier.${tier}`)}</option>)}
           </select>
         </div>
         <div className="control-group">
@@ -101,7 +101,7 @@ export default function QualityMarkov() {
                 strokeWidth={isTarget ? 2.5 : 1.5} />
               <text x={pos.x} y={pos.y + 1} textAnchor="middle" dominantBaseline="middle"
                 fill={QUALITY_COLORS[tier]} fontSize={11} fontWeight="bold" fontFamily="sans-serif">
-                {tier.slice(0, 3)}
+                {t(`quality.tier.${tier}`).slice(0, 3)}
               </text>
               <text x={pos.x} y={pos.y + NODE_R + 16} textAnchor="middle"
                 fill="#ffffff60" fontSize={9} fontFamily="monospace">
