@@ -86,6 +86,24 @@ const diagrams = [
     descKey: 'solar.description',
     tags: ['solar.tag.energy', 'solar.tag.curve'],
   },
+  {
+    id: 'mining-productivity',
+    titleKey: 'mining.title',
+    descKey: 'mining.description',
+    tags: ['mining.tag.research', 'mining.tag.scaling'],
+  },
+  {
+    id: 'noise-visualizer',
+    titleKey: 'noise.title',
+    descKey: 'noise.description',
+    tags: ['noise.tag.mapgen', 'noise.tag.noise'],
+  },
+  {
+    id: 'space-platform',
+    titleKey: 'space.title',
+    descKey: 'space.description',
+    tags: ['space.tag.spaceAge', 'space.tag.platform'],
+  },
 ]
 
 export default function Home() {

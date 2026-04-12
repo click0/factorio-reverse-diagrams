@@ -15,6 +15,9 @@ import BeaconLayout from '../widgets/beacon-layout/BeaconLayout'
 import FluidSystem from '../widgets/fluid-system/FluidSystem'
 import TechTree from '../widgets/tech-tree/TechTree'
 import SolarCurve from '../widgets/solar-curve/SolarCurve'
+import MiningProductivity from '../widgets/mining-productivity/MiningProductivity'
+import NoiseVisualizer from '../widgets/noise-visualizer/NoiseVisualizer'
+import SpacePlatform from '../widgets/space-platform/SpacePlatform'
 
 const DIAGRAM_ORDER = [
   'belt-simulator',
@@ -31,6 +34,9 @@ const DIAGRAM_ORDER = [
   'fluid-system',
   'tech-tree',
   'solar-curve',
+  'mining-productivity',
+  'noise-visualizer',
+  'space-platform',
 ]
 
 const widgetMeta: Record<string, { titleKey: string }> = {
@@ -48,6 +54,9 @@ const widgetMeta: Record<string, { titleKey: string }> = {
   'fluid-system': { titleKey: 'fluid.title' },
   'tech-tree': { titleKey: 'tech.title' },
   'solar-curve': { titleKey: 'solar.title' },
+  'mining-productivity': { titleKey: 'mining.title' },
+  'noise-visualizer': { titleKey: 'noise.title' },
+  'space-platform': { titleKey: 'space.title' },
 }
 
 function WidgetPlaceholder() {
@@ -77,6 +86,9 @@ function getWidget(widgetId: string) {
     case 'fluid-system': return <FluidSystem />
     case 'tech-tree': return <TechTree />
     case 'solar-curve': return <SolarCurve />
+    case 'mining-productivity': return <MiningProductivity />
+    case 'noise-visualizer': return <NoiseVisualizer />
+    case 'space-platform': return <SpacePlatform />
     default: return <WidgetPlaceholder />
   }
 }
