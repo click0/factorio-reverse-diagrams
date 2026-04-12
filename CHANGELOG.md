@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.35.0] - 2026-04-12
+
+### Added
+- **Power Calculator widget** — solar panel/accumulator ratio calculator with day/night cycle SVG chart, nuclear reactor layout calculator (line/2x2/2xN) with neighbor bonus, heat exchanger and steam turbine counts
+- **Inserter Cycle widget** — animated SVG inserter swing arc with 6 inserter types (Burner, Basic, Long, Fast, Stack, Bulk), tick-by-tick phase display (pickup/swing/drop), stack size control, throughput calculator
+- **Evolution Curve widget** — evolution factor simulator with adjustable game hours, pollution rate, and spawner destruction; SVG evolution curve chart with threshold lines; unit composition bar (small/medium/big/behemoth biters and spitters)
+- Full Ukrainian translations for all 3 new widgets
+- Navigation sidebar and landing page updated with 8 total diagrams
+
 ## [0.34.0] - 2026-04-12
 
 ### Added
