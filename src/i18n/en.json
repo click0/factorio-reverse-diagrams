@@ -1,0 +1,48 @@
+{
+  "nav.subtitle": "Reverse Diagrams",
+  "nav.home": "Home",
+  "nav.belt": "Belt Mechanics",
+  "nav.recipe": "Recipe DAG",
+  "nav.pollution": "Pollution Diffusion",
+  "nav.quality": "Quality Grind",
+  "nav.system": "System of Systems",
+
+  "home.title": "Factorio Reverse Diagrams",
+  "home.description": "Interactive explorable explanations of Factorio's simulation — from belt physics to planetary logistics.",
+
+  "belt.title": "Belt Mechanics",
+  "belt.description": "Animated discrete item slot simulator. See how belts move items tick-by-tick, how side-loading works, and how splitters make decisions.",
+  "belt.tag.canvas": "Canvas",
+  "belt.tag.simulation": "Simulation",
+
+  "recipe.title": "Recipe DAG",
+  "recipe.description": "Interactive full production dependency graph. Trace any item back to raw ores, adjust production rates, and find critical paths.",
+  "recipe.tag.d3": "D3",
+  "recipe.tag.graph": "Graph",
+
+  "pollution.title": "Pollution Diffusion",
+  "pollution.description": "Cellular automaton heatmap simulation. Watch pollution spread from your factory, see absorption by trees, and predict steady-state.",
+  "pollution.tag.canvas": "Canvas",
+  "pollution.tag.simulation": "Simulation",
+
+  "quality.title": "Quality Grind",
+  "quality.description": "Markov chain visualizer for Space Age quality system. Configure modules, calculate expected iterations to reach Legendary.",
+  "quality.tag.markov": "Markov Chain",
+  "quality.tag.calculator": "Calculator",
+
+  "system.title": "System of Systems",
+  "system.description": "Master feedback loop diagram. See how mining, production, pollution, combat, and research form reinforcing and balancing loops.",
+  "system.tag.causal": "Causal Loops",
+  "system.tag.overview": "Overview",
+
+  "controls.play": "Play",
+  "controls.pause": "Pause",
+  "controls.step": "Step",
+  "controls.speed": "Speed",
+  "controls.reset": "Reset",
+
+  "widget.comingSoon": "Coming soon",
+  "widget.comingSoonDesc": "This interactive diagram is under development.",
+
+  "common.openDiagram": "Open Diagram"
+}

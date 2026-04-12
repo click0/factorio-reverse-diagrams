@@ -1,0 +1,48 @@
+{
+  "nav.subtitle": "Зворотні діаграми",
+  "nav.home": "Головна",
+  "nav.belt": "Механіка конвеєрів",
+  "nav.recipe": "Граф рецептів",
+  "nav.pollution": "Дифузія забруднення",
+  "nav.quality": "Якість (Quality)",
+  "nav.system": "Система систем",
+
+  "home.title": "Зворотні діаграми Factorio",
+  "home.description": "Інтерактивні пояснення симуляції Factorio — від фізики конвеєрів до міжпланетної логістики.",
+
+  "belt.title": "Механіка конвеєрів",
+  "belt.description": "Анімований симулятор дискретних слотів. Подивіться, як конвеєри переміщують предмети тік за тіком.",
+  "belt.tag.canvas": "Canvas",
+  "belt.tag.simulation": "Симуляція",
+
+  "recipe.title": "Граф рецептів (DAG)",
+  "recipe.description": "Інтерактивний граф залежностей виробництва. Прослідкуйте будь-який предмет до сировини.",
+  "recipe.tag.d3": "D3",
+  "recipe.tag.graph": "Граф",
+
+  "pollution.title": "Дифузія забруднення",
+  "pollution.description": "Симуляція теплової карти (клітинний автомат). Спостерігайте, як забруднення поширюється від фабрики.",
+  "pollution.tag.canvas": "Canvas",
+  "pollution.tag.simulation": "Симуляція",
+
+  "quality.title": "Якість (Quality Grind)",
+  "quality.description": "Візуалізатор ланцюгів Маркова для системи якості Space Age. Налаштуйте модулі, розрахуйте ітерації.",
+  "quality.tag.markov": "Ланцюг Маркова",
+  "quality.tag.calculator": "Калькулятор",
+
+  "system.title": "Система систем",
+  "system.description": "Діаграма петель зворотного зв'язку. Дивіться, як видобуток, виробництво, забруднення та дослідження утворюють петлі.",
+  "system.tag.causal": "Каузальні петлі",
+  "system.tag.overview": "Огляд",
+
+  "controls.play": "Пуск",
+  "controls.pause": "Пауза",
+  "controls.step": "Крок",
+  "controls.speed": "Швидкість",
+  "controls.reset": "Скинути",
+
+  "widget.comingSoon": "Незабаром",
+  "widget.comingSoonDesc": "Ця інтерактивна діаграма в розробці.",
+
+  "common.openDiagram": "Відкрити діаграму"
+}
