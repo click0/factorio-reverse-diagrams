@@ -104,6 +104,18 @@ const diagrams = [
     descKey: 'space.description',
     tags: ['space.tag.spaceAge', 'space.tag.platform'],
   },
+  {
+    id: 'combinator-sandbox',
+    titleKey: 'circuit.title',
+    descKey: 'circuit.description',
+    tags: ['circuit.tag.circuit', 'circuit.tag.simulator'],
+  },
+  {
+    id: 'train-pathfinding',
+    titleKey: 'trainPath.title',
+    descKey: 'trainPath.description',
+    tags: ['trainPath.tag.trains', 'trainPath.tag.signals'],
+  },
 ]
 
 export default function Home() {

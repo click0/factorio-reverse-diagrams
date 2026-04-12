@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.39.0] - 2026-04-12
+
+### Added
+- **Combinator Sandbox widget** — interactive circuit network simulator: place Constant/Arithmetic/Decider combinators, wire them with red/green wires, edit configurations inline (signals, operations, thresholds), step through ticks with 1-tick delay propagation, signal table display per entity
+- **Train Pathfinding widget** — rail block and signal visualization: Canvas-rendered track with 4 signal-controlled blocks, train movement with block reservation/occupation/freeing logic, chain signal that checks all blocks ahead, color-coded block states (green=free, orange=reserved, red=occupied), event log
+- Full Ukrainian translations for both new widgets
+- Navigation sidebar and landing page updated with 19 total diagrams
+
 ## [0.38.0] - 2026-04-12
 
 ### Added
