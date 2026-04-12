@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.41.0] - 2026-04-12
+
+### Added
+- **Blueprint Analyzer widget** — paste blueprint JSON to analyze: entity counts table, category breakdown bar (transport/logistics/production/fluid/power/defense/circuit/rail), blueprint dimensions, demo blueprint included
+- **UPS Optimizer widget** — entity count vs UPS impact calculator with 10 entity categories (belts/inserters/assemblers/furnaces/pipes/bots/trains/turrets/solar/beacons), stacked bar budget visualization, estimated UPS output, over-budget warning
+- **Circuit 2.0 widget** — Factorio 2.0 new circuit features: Selector Combinator with 4 modes (by index/count/random/stack-size), Display Panel with 3 visualization modes (values/bars/icons), editable input signals
+- Full Ukrainian translations for all 3 new widgets
+- Navigation sidebar and landing page updated with 25 total diagrams
+
 ## [0.40.0] - 2026-04-12
 
 ### Added

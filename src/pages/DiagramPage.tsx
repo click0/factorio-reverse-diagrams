@@ -23,6 +23,9 @@ import TrainPathfinding from '../widgets/train-pathfinding/TrainPathfinding'
 import GameTick from '../widgets/game-tick/GameTick'
 import DefenseCalculator from '../widgets/defense-calculator/DefenseCalculator'
 import RobotLogistics from '../widgets/robot-logistics/RobotLogistics'
+import BlueprintAnalyzer from '../widgets/blueprint-analyzer/BlueprintAnalyzer'
+import UPSOptimizer from '../widgets/ups-optimizer/UPSOptimizer'
+import Circuit2 from '../widgets/circuit-2/Circuit2'
 
 const DIAGRAM_ORDER = [
   'belt-simulator',
@@ -47,6 +50,9 @@ const DIAGRAM_ORDER = [
   'game-tick',
   'defense-calculator',
   'robot-logistics',
+  'blueprint-analyzer',
+  'ups-optimizer',
+  'circuit-2',
 ]
 
 const widgetMeta: Record<string, { titleKey: string }> = {
@@ -72,6 +78,9 @@ const widgetMeta: Record<string, { titleKey: string }> = {
   'game-tick': { titleKey: 'gameTick.title' },
   'defense-calculator': { titleKey: 'defense.title' },
   'robot-logistics': { titleKey: 'robots.title' },
+  'blueprint-analyzer': { titleKey: 'blueprint.title' },
+  'ups-optimizer': { titleKey: 'ups.title' },
+  'circuit-2': { titleKey: 'circuit2.title' },
 }
 
 function WidgetPlaceholder() {
@@ -109,6 +118,9 @@ function getWidget(widgetId: string) {
     case 'game-tick': return <GameTick />
     case 'defense-calculator': return <DefenseCalculator />
     case 'robot-logistics': return <RobotLogistics />
+    case 'blueprint-analyzer': return <BlueprintAnalyzer />
+    case 'ups-optimizer': return <UPSOptimizer />
+    case 'circuit-2': return <Circuit2 />
     default: return <WidgetPlaceholder />
   }
 }

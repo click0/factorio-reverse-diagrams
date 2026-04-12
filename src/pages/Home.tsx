@@ -134,6 +134,24 @@ const diagrams = [
     descKey: 'robots.description',
     tags: ['robots.tag.logistics', 'robots.tag.robots'],
   },
+  {
+    id: 'blueprint-analyzer',
+    titleKey: 'blueprint.title',
+    descKey: 'blueprint.description',
+    tags: ['blueprint.tag.blueprint', 'blueprint.tag.analyzer'],
+  },
+  {
+    id: 'ups-optimizer',
+    titleKey: 'ups.title',
+    descKey: 'ups.description',
+    tags: ['ups.tag.performance', 'ups.tag.ups'],
+  },
+  {
+    id: 'circuit-2',
+    titleKey: 'circuit2.title',
+    descKey: 'circuit2.description',
+    tags: ['circuit2.tag.circuit', 'circuit2.tag.new'],
+  },
 ]
 
 export default function Home() {
