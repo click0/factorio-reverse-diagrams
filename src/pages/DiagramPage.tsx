@@ -12,6 +12,9 @@ import EvolutionCurve from '../widgets/evolution-curve/EvolutionCurve'
 import TrainInterrupts from '../widgets/train-interrupts/TrainInterrupts'
 import SpoilageTimeline from '../widgets/spoilage-timeline/SpoilageTimeline'
 import BeaconLayout from '../widgets/beacon-layout/BeaconLayout'
+import FluidSystem from '../widgets/fluid-system/FluidSystem'
+import TechTree from '../widgets/tech-tree/TechTree'
+import SolarCurve from '../widgets/solar-curve/SolarCurve'
 
 const DIAGRAM_ORDER = [
   'belt-simulator',
@@ -25,6 +28,9 @@ const DIAGRAM_ORDER = [
   'train-interrupts',
   'spoilage-timeline',
   'beacon-layout',
+  'fluid-system',
+  'tech-tree',
+  'solar-curve',
 ]
 
 const widgetMeta: Record<string, { titleKey: string }> = {
@@ -39,6 +45,9 @@ const widgetMeta: Record<string, { titleKey: string }> = {
   'train-interrupts': { titleKey: 'train.title' },
   'spoilage-timeline': { titleKey: 'spoilage.title' },
   'beacon-layout': { titleKey: 'beacon.title' },
+  'fluid-system': { titleKey: 'fluid.title' },
+  'tech-tree': { titleKey: 'tech.title' },
+  'solar-curve': { titleKey: 'solar.title' },
 }
 
 function WidgetPlaceholder() {
@@ -65,6 +74,9 @@ function getWidget(widgetId: string) {
     case 'train-interrupts': return <TrainInterrupts />
     case 'spoilage-timeline': return <SpoilageTimeline />
     case 'beacon-layout': return <BeaconLayout />
+    case 'fluid-system': return <FluidSystem />
+    case 'tech-tree': return <TechTree />
+    case 'solar-curve': return <SolarCurve />
     default: return <WidgetPlaceholder />
   }
 }

@@ -68,6 +68,24 @@ const diagrams = [
     descKey: 'beacon.description',
     tags: ['beacon.tag.layout', 'beacon.tag.modules'],
   },
+  {
+    id: 'fluid-system',
+    titleKey: 'fluid.title',
+    descKey: 'fluid.description',
+    tags: ['fluid.tag.simulator', 'fluid.tag.fluids'],
+  },
+  {
+    id: 'tech-tree',
+    titleKey: 'tech.title',
+    descKey: 'tech.description',
+    tags: ['tech.tag.tree', 'tech.tag.research'],
+  },
+  {
+    id: 'solar-curve',
+    titleKey: 'solar.title',
+    descKey: 'solar.description',
+    tags: ['solar.tag.energy', 'solar.tag.curve'],
+  },
 ]
 
 export default function Home() {
