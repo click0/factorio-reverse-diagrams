@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect, useCallback, useMemo } from 'react'
+import { useState, useRef, useMemo, useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import dagre from 'dagre'
 import { ITEMS, RECIPES, CATEGORY_COLORS, type RecipeItem } from './recipeData'
 
@@ -106,6 +107,7 @@ function getUpstreamDownstream(itemId: string): Set<string> {
 }
 
 export default function RecipeDAG() {
+  const { t } = useTranslation()
   const containerRef = useRef<HTMLDivElement>(null)
   const [filter, setFilter] = useState('')
   const [highlighted, setHighlighted] = useState<string | null>(null)
@@ -136,15 +138,15 @@ export default function RecipeDAG() {
     <div>
       <div className="controls-row">
         <div className="control-group">
-          <label>Search:</label>
+          <label>{t('recipe.search')}:</label>
           <input type="text" value={filter} onChange={(e) => { setFilter(e.target.value); setHighlighted(null) }}
-            placeholder="Filter items..." style={{ background: 'var(--bg-surface)', color: 'var(--text-primary)', border: '1px solid var(--border)', borderRadius: 4, padding: '4px 8px', fontSize: 13, width: 180 }} />
+            placeholder={t('recipe.filterPlaceholder')} style={{ background: 'var(--bg-surface)', color: 'var(--text-primary)', border: '1px solid var(--border)', borderRadius: 4, padding: '4px 8px', fontSize: 13, width: 180 }} />
         </div>
         {highlighted && (
-          <button className="btn" onClick={() => setHighlighted(null)}>Clear highlight</button>
+          <button className="btn" onClick={() => setHighlighted(null)}>{t('recipe.clearHighlight')}</button>
         )}
         <div className="control-group">
-          <label>Zoom:</label>
+          <label>{t('recipe.zoom')}:</label>
           <input type="range" min={0.2} max={2} step={0.05} value={zoom} onChange={(e) => setZoom(Number(e.target.value))} />
           <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>{Math.round(zoom * 100)}%</span>
         </div>
@@ -155,7 +157,7 @@ export default function RecipeDAG() {
         {Object.entries(CATEGORY_COLORS).map(([cat, color]) => (
           <span key={cat} style={{ fontSize: 11, color, display: 'flex', alignItems: 'center', gap: 4 }}>
             <span style={{ width: 8, height: 8, borderRadius: 2, background: color, display: 'inline-block' }} />
-            {cat}
+            {t(`recipe.cat.${cat}`)}
           </span>
         ))}
       </div>

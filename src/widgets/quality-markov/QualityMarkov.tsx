@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect, useCallback } from 'react'
+import { useState, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { QUALITY_TIERS, QUALITY_COLORS, QUALITY_MULTIPLIERS, QUALITY_MODULES, type ModuleConfig } from './types'
 import { buildTransitionMatrix, expectedIterations, resourceCost } from './markovMath'
 
@@ -8,6 +9,7 @@ const NODE_R = 28
 const PAD = 50
 
 export default function QualityMarkov() {
+  const { t } = useTranslation()
   const svgRef = useRef<SVGSVGElement>(null)
   const [config, setConfig] = useState<ModuleConfig>({ moduleIdx: 2, moduleCount: 4, useRecycler: false })
   const [targetTier, setTargetTier] = useState(4) // Legendary
@@ -25,28 +27,28 @@ export default function QualityMarkov() {
     <div>
       <div className="controls-row">
         <div className="control-group">
-          <label>Module:</label>
+          <label>{t('quality.module')}:</label>
           <select value={config.moduleIdx} onChange={(e) => setConfig({ ...config, moduleIdx: Number(e.target.value) })}>
             {QUALITY_MODULES.map((m, i) => <option key={i} value={i}>{m.name} ({m.qualityChance}%)</option>)}
           </select>
         </div>
         <div className="control-group">
-          <label>Count:</label>
+          <label>{t('quality.count')}:</label>
           <select value={config.moduleCount} onChange={(e) => setConfig({ ...config, moduleCount: Number(e.target.value) })}>
             {[1, 2, 3, 4].map(n => <option key={n} value={n}>{n}</option>)}
           </select>
         </div>
         <div className="control-group">
-          <label>Target:</label>
+          <label>{t('quality.target')}:</label>
           <select value={targetTier} onChange={(e) => setTargetTier(Number(e.target.value))}>
-            {QUALITY_TIERS.map((t, i) => i > 0 && <option key={i} value={i}>{t}</option>)}
+            {QUALITY_TIERS.map((tier, i) => i > 0 && <option key={i} value={i}>{tier}</option>)}
           </select>
         </div>
         <div className="control-group">
           <label>
             <input type="checkbox" checked={config.useRecycler}
               onChange={(e) => setConfig({ ...config, useRecycler: e.target.checked })} />
-            {' '}Recycler
+            {' '}{t('quality.recycler')}
           </label>
         </div>
       </div>
@@ -112,10 +114,10 @@ export default function QualityMarkov() {
 
       {/* Calculator results */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 12, marginTop: 16 }}>
-        <ResultCard label="Expected crafts" value={isFinite(expIter) ? expIter.toFixed(1) : '∞'} />
-        <ResultCard label="Resource cost" value={isFinite(resCost) ? `${resCost.toFixed(1)}x` : '∞'} />
-        <ResultCard label="Quality chance/craft" value={`${Math.min(100, QUALITY_MODULES[config.moduleIdx].qualityChance * config.moduleCount).toFixed(1)}%`} />
-        <ResultCard label="Stat multiplier" value={`x${QUALITY_MULTIPLIERS[QUALITY_TIERS[targetTier]]}`} />
+        <ResultCard label={t('quality.expectedCrafts')} value={isFinite(expIter) ? expIter.toFixed(1) : '∞'} />
+        <ResultCard label={t('quality.resourceCost')} value={isFinite(resCost) ? `${resCost.toFixed(1)}x` : '∞'} />
+        <ResultCard label={t('quality.chancePerCraft')} value={`${Math.min(100, QUALITY_MODULES[config.moduleIdx].qualityChance * config.moduleCount).toFixed(1)}%`} />
+        <ResultCard label={t('quality.statMultiplier')} value={`x${QUALITY_MULTIPLIERS[QUALITY_TIERS[targetTier]]}`} />
       </div>
     </div>
   )

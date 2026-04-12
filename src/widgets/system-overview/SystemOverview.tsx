@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { NODES, EDGES, LOOPS } from './systemData'
 
 const W = 820
@@ -6,6 +7,7 @@ const H = 420
 const NODE_R = 30
 
 export default function SystemOverview() {
+  const { t } = useTranslation()
   const [activeLoops, setActiveLoops] = useState<Set<string>>(new Set())
   const [hoveredNode, setHoveredNode] = useState<string | null>(null)
   const [selectedNode, setSelectedNode] = useState<string | null>(null)
@@ -37,7 +39,7 @@ export default function SystemOverview() {
     <div>
       {/* Loop toggles */}
       <div className="controls-row" style={{ gap: 6 }}>
-        <label style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Loops:</label>
+        <label style={{ fontSize: 13, color: 'var(--text-secondary)' }}>{t('system.loops')}:</label>
         {LOOPS.map(loop => (
           <button key={loop.id}
             className={`btn ${activeLoops.has(loop.id) ? 'active' : ''}`}
@@ -48,7 +50,7 @@ export default function SystemOverview() {
           </button>
         ))}
         {activeLoops.size > 0 && (
-          <button className="btn" onClick={() => setActiveLoops(new Set())}>Show All</button>
+          <button className="btn" onClick={() => setActiveLoops(new Set())}>{t('system.showAll')}</button>
         )}
       </div>
 
@@ -132,7 +134,7 @@ export default function SystemOverview() {
           </div>
           <p style={{ fontSize: 13, color: 'var(--text-secondary)', margin: 0 }}>{selectedInfo.description}</p>
           <div style={{ marginTop: 8, fontSize: 11, color: 'var(--text-muted)' }}>
-            Connections: {EDGES.filter(e => e.from === selectedInfo.id || e.to === selectedInfo.id).length}
+            {t('system.connections')}: {EDGES.filter(e => e.from === selectedInfo.id || e.to === selectedInfo.id).length}
           </div>
         </div>
       )}

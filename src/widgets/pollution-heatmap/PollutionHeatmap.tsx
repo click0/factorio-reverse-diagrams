@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import TimelineControls from '../../components/Timeline/TimelineControls'
 import { ENTITIES, TILE_COLORS, type TileType, type PollutionState } from './types'
 import { createState, advanceTick, toggleTile, addEntity, removeEntity } from './diffusionEngine'
@@ -8,6 +9,7 @@ const CELL = 16
 const PAD = 8
 
 export default function PollutionHeatmap() {
+  const { t } = useTranslation()
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const rafRef = useRef(0)
   const lastRef = useRef(0)
@@ -127,9 +129,9 @@ export default function PollutionHeatmap() {
 
       <div className="controls-row">
         <div className="control-group">
-          <label>Tool:</label>
-          <button className={`btn ${tool === 'entity' ? 'active' : ''}`} onClick={() => setTool('entity')}>Entity</button>
-          <button className={`btn ${tool === 'tile' ? 'active' : ''}`} onClick={() => setTool('tile')}>Tile</button>
+          <label>{t('pollution.tool')}:</label>
+          <button className={`btn ${tool === 'entity' ? 'active' : ''}`} onClick={() => setTool('entity')}>{t('pollution.entity')}</button>
+          <button className={`btn ${tool === 'tile' ? 'active' : ''}`} onClick={() => setTool('tile')}>{t('pollution.tile')}</button>
         </div>
         {tool === 'entity' ? (
           <div className="control-group">
@@ -140,10 +142,10 @@ export default function PollutionHeatmap() {
         ) : (
           <div className="control-group">
             <select value={selectedTile} onChange={(e) => setSelectedTile(e.target.value as TileType)}>
-              <option value="grass">Grass</option>
-              <option value="forest">Forest (absorbs)</option>
-              <option value="water">Water (absorbs)</option>
-              <option value="concrete">Concrete</option>
+              <option value="grass">{t('pollution.grass')}</option>
+              <option value="forest">{t('pollution.forest')}</option>
+              <option value="water">{t('pollution.water')}</option>
+              <option value="concrete">{t('pollution.concrete')}</option>
             </select>
           </div>
         )}
