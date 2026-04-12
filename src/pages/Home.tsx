@@ -50,6 +50,24 @@ const diagrams = [
     descKey: 'evolution.description',
     tags: ['evolution.tag.curve', 'evolution.tag.combat'],
   },
+  {
+    id: 'train-interrupts',
+    titleKey: 'train.title',
+    descKey: 'train.description',
+    tags: ['train.tag.simulator', 'train.tag.trains'],
+  },
+  {
+    id: 'spoilage-timeline',
+    titleKey: 'spoilage.title',
+    descKey: 'spoilage.description',
+    tags: ['spoilage.tag.spaceAge', 'spoilage.tag.timeline'],
+  },
+  {
+    id: 'beacon-layout',
+    titleKey: 'beacon.title',
+    descKey: 'beacon.description',
+    tags: ['beacon.tag.layout', 'beacon.tag.modules'],
+  },
 ]
 
 export default function Home() {

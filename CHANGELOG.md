@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.36.0] - 2026-04-12
+
+### Added
+- **Train Interrupts widget** — Train 2.0 schedule & interrupt simulator with SVG decision tree visualization, step-through simulation, event log with interrupt triggers
+- **Spoilage Timeline widget** (Space Age) — spoilage calculator with transit time based on belt tier and distance, processing time, freshness gradient bar, survival prediction for 6 spoilable items (Nutrients, Bioflux, Biter Egg, Pentapod Egg, Yumako Fruit, Jelly)
+- **Beacon Layout widget** — interactive Canvas grid placement tool for machines and beacons, 6 module types (Speed 1-3, Productivity 1-3), speed/productivity bonus calculation with beacon distribution factor (50%), effective throughput display
+- Full Ukrainian translations for all 3 new widgets
+- Navigation sidebar and landing page updated with 11 total diagrams
+
 ## [0.35.0] - 2026-04-12
 
 ### Added

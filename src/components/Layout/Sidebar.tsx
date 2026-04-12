@@ -10,6 +10,9 @@ const diagrams = [
   { id: 'power-calculator', labelKey: 'nav.power' },
   { id: 'inserter-cycle', labelKey: 'nav.inserter' },
   { id: 'evolution-curve', labelKey: 'nav.evolution' },
+  { id: 'train-interrupts', labelKey: 'nav.train' },
+  { id: 'spoilage-timeline', labelKey: 'nav.spoilage' },
+  { id: 'beacon-layout', labelKey: 'nav.beacon' },
 ]
 
 interface SidebarProps {
@@ -57,7 +60,7 @@ export default function Sidebar({ onClose }: SidebarProps) {
           </button>
         </div>
         <div style={{ marginTop: 8, lineHeight: 1.4 }}>
-          <span style={{ color: 'var(--accent)', fontSize: 11 }}>v0.35</span>
+          <span style={{ color: 'var(--accent)', fontSize: 11 }}>v0.36</span>
           <br />
           <span style={{ fontSize: 10 }}>&copy; 2026 Vladyslav V. Prodan</span>
         </div>
