@@ -17,9 +17,21 @@ A comprehensive reverse-engineering documentation of **Factorio's simulation** (
 
 Available in **English** and **Ukrainian**.
 
-## Status: Planning Phase
+## Status: Phase 1 — Interactive Diagrams (v0.33)
 
-The content plan and project infrastructure documents are complete. Implementation has not yet begun.
+Five flagship interactive diagrams implemented:
+
+1. **Belt Mechanics** — Canvas animation with 3 belt tiers, side-loading, splitter logic
+2. **Recipe DAG** — D3 + dagre dependency graph with search, pan/zoom, dependency tracing
+3. **Pollution Diffusion** — Canvas heatmap with cellular automaton, entity placement, tile absorption
+4. **Quality Grind** — Markov chain visualizer with module config and expected iterations calculator
+5. **System of Systems** — Causal loop diagram with 5 toggleable feedback loops
+
+## Author
+
+**Vladyslav V. Prodan**
+- GitHub: [github.com/click0](https://github.com/click0)
+- Phone: +38(099)6053340
 
 ## Repository Structure
 

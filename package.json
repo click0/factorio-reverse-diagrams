@@ -1,6 +1,6 @@
 {
   "name": "factorio-reverse-diagrams",
-  "version": "1.0.0",
+  "version": "0.33.0",
   "description": "> Mapping and translating the rules of Factorio's simulation into interactive explorable explanations.",
   "type": "module",
   "scripts": {
@@ -13,8 +13,8 @@
     "url": "http://local_proxy@127.0.0.1:44905/git/click0/factorio-reverse-diagrams"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Vladyslav V. Prodan <github.com/click0>",
+  "license": "BSD-3-Clause",
   "dependencies": {
     "d3": "^7.9.0",
     "dagre": "^0.8.5",
