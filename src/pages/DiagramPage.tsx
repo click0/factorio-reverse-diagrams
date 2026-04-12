@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import WidgetShell from '../components/WidgetShell/WidgetShell'
 import BeltSimulator from '../widgets/belt-simulator/BeltSimulator'
@@ -6,6 +6,14 @@ import PollutionHeatmap from '../widgets/pollution-heatmap/PollutionHeatmap'
 import QualityMarkov from '../widgets/quality-markov/QualityMarkov'
 import RecipeDAG from '../widgets/recipe-dag/RecipeDAG'
 import SystemOverview from '../widgets/system-overview/SystemOverview'
+
+const DIAGRAM_ORDER = [
+  'belt-simulator',
+  'recipe-dag',
+  'pollution-heatmap',
+  'quality-markov',
+  'system-overview',
+]
 
 const widgetMeta: Record<string, { titleKey: string }> = {
   'belt-simulator': { titleKey: 'belt.title' },
@@ -44,6 +52,10 @@ export default function DiagramPage() {
   const meta = widgetMeta[widgetId || '']
   const title = meta ? t(meta.titleKey) : 'Diagram'
 
+  const idx = DIAGRAM_ORDER.indexOf(widgetId || '')
+  const prevId = idx > 0 ? DIAGRAM_ORDER[idx - 1] : null
+  const nextId = idx >= 0 && idx < DIAGRAM_ORDER.length - 1 ? DIAGRAM_ORDER[idx + 1] : null
+
   return (
     <>
       <div className="page-header">
@@ -52,6 +64,19 @@ export default function DiagramPage() {
       <WidgetShell title={title}>
         {getWidget(widgetId || '')}
       </WidgetShell>
+
+      <div style={{ display: 'flex', justifyContent: 'space-between', padding: '16px 24px' }}>
+        {prevId ? (
+          <Link to={`/diagram/${prevId}`} className="btn" style={{ textDecoration: 'none' }}>
+            &larr; {t(widgetMeta[prevId].titleKey)}
+          </Link>
+        ) : <span />}
+        {nextId ? (
+          <Link to={`/diagram/${nextId}`} className="btn" style={{ textDecoration: 'none' }}>
+            {t(widgetMeta[nextId].titleKey)} &rarr;
+          </Link>
+        ) : <span />}
+      </div>
     </>
   )
 }

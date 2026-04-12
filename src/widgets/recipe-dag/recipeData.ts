@@ -64,6 +64,7 @@ export const ITEMS: RecipeItem[] = [
   { id: 'utility-science', name: 'Utility Science', category: 'science' },
 
   // Rocket
+  { id: 'speed-module', name: 'Speed Module', category: 'product' },
   { id: 'low-density-structure', name: 'Low Density Structure', category: 'rocket' },
   { id: 'rocket-fuel', name: 'Rocket Fuel', category: 'rocket' },
   { id: 'rocket-control-unit', name: 'Rocket Control Unit', category: 'rocket' },
@@ -103,6 +104,9 @@ export const RECIPES: Recipe[] = [
   { output: 'electric-engine', inputs: [{ id: 'engine-unit', amount: 1 }, { id: 'green-circuit', amount: 2 }, { id: 'lubricant', amount: 15 }], outputAmount: 1, time: 10 },
   { output: 'battery', inputs: [{ id: 'sulfuric-acid', amount: 20 }, { id: 'iron-plate', amount: 1 }, { id: 'copper-plate', amount: 1 }], outputAmount: 1, time: 4 },
   { output: 'flying-robot-frame', inputs: [{ id: 'electric-engine', amount: 1 }, { id: 'battery', amount: 2 }, { id: 'steel-plate', amount: 1 }, { id: 'green-circuit', amount: 3 }], outputAmount: 1, time: 20 },
+
+  // Modules
+  { output: 'speed-module', inputs: [{ id: 'red-circuit', amount: 5 }, { id: 'green-circuit', amount: 5 }], outputAmount: 1, time: 15 },
 
   // Science packs
   { output: 'automation-science', inputs: [{ id: 'copper-plate', amount: 1 }, { id: 'iron-gear', amount: 1 }], outputAmount: 1, time: 5 },
