@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import TimelineControls from '../../components/Timeline/TimelineControls'
 import { BELT_TIERS, type BeltTier, type BeltState, type Scenario, type SplitterConfig } from './types'
 import { createInitialState, advanceTick, getSlotCount, getSideSlots } from './beltEngine'
@@ -8,6 +9,7 @@ const GAP = 3
 const PAD = 14
 
 export default function BeltSimulator() {
+  const { t } = useTranslation()
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const rafRef = useRef(0)
   const lastRef = useRef(0)
@@ -165,18 +167,18 @@ export default function BeltSimulator() {
 
       <div className="controls-row">
         <div className="control-group">
-          <label>Tier:</label>
-          {BELT_TIERS.map((t, i) => (
-            <button key={t.name} className={`btn ${i === tierIdx ? 'active' : ''}`}
-              style={{ borderColor: i === tierIdx ? t.color : undefined, color: i === tierIdx ? t.color : undefined }}
-              onClick={() => changeTier(i)}>{t.name}</button>
+          <label>{t('belt.tier')}:</label>
+          {BELT_TIERS.map((bt, i) => (
+            <button key={bt.name} className={`btn ${i === tierIdx ? 'active' : ''}`}
+              style={{ borderColor: i === tierIdx ? bt.color : undefined, color: i === tierIdx ? bt.color : undefined }}
+              onClick={() => changeTier(i)}>{bt.name}</button>
           ))}
         </div>
         <div className="control-group">
-          <label>Mode:</label>
+          <label>{t('belt.mode')}:</label>
           {(['straight', 'sideload', 'splitter'] as Scenario[]).map((s) => (
             <button key={s} className={`btn ${scenario === s ? 'active' : ''}`}
-              onClick={() => changeScenario(s)}>{s === 'straight' ? 'Straight' : s === 'sideload' ? 'Side-load' : 'Splitter'}</button>
+              onClick={() => changeScenario(s)}>{t(`belt.${s}`)}</button>
           ))}
         </div>
       </div>
@@ -184,12 +186,12 @@ export default function BeltSimulator() {
       {scenario === 'splitter' && (
         <div className="controls-row">
           <div className="control-group">
-            <label>Output priority:</label>
+            <label>{t('belt.outputPriority')}:</label>
             <select value={splitterCfg.outputPriority}
               onChange={(e) => setSplitterCfg({ ...splitterCfg, outputPriority: e.target.value as SplitterConfig['outputPriority'] })}>
-              <option value="none">None</option>
-              <option value="left">Left (A)</option>
-              <option value="right">Right (B)</option>
+              <option value="none">{t('belt.priorityNone')}</option>
+              <option value="left">{t('belt.priorityLeft')}</option>
+              <option value="right">{t('belt.priorityRight')}</option>
             </select>
           </div>
         </div>
