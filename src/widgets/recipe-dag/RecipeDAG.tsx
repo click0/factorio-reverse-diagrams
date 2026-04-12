@@ -9,7 +9,7 @@ interface EdgePos { from: string; to: string; x1: number; y1: number; x2: number
 const NODE_W = 120
 const NODE_H = 32
 
-function buildGraph(filter: string, highlighted: string | null) {
+function buildGraph(filter: string, highlighted: string | null, translate: (key: string) => string) {
   const g = new dagre.graphlib.Graph()
   g.setGraph({ rankdir: 'LR', ranksep: 80, nodesep: 20 })
   g.setDefaultEdgeLabel(() => ({}))
@@ -25,7 +25,7 @@ function buildGraph(filter: string, highlighted: string | null) {
 
   const lowerFilter = filter.toLowerCase()
   const visibleItems = ITEMS.filter(it =>
-    usedItems.has(it.id) && (filter === '' || it.name.toLowerCase().includes(lowerFilter) || it.id.includes(lowerFilter))
+    usedItems.has(it.id) && (filter === '' || it.name.toLowerCase().includes(lowerFilter) || it.id.includes(lowerFilter) || translate(`item.${it.id}`).toLowerCase().includes(lowerFilter))
   )
 
   const visibleIds = new Set(visibleItems.map(it => it.id))
@@ -116,7 +116,7 @@ export default function RecipeDAG() {
   const dragging = useRef(false)
   const lastMouse = useRef({ x: 0, y: 0 })
 
-  const graph = useMemo(() => buildGraph(filter, highlighted), [filter, highlighted])
+  const graph = useMemo(() => buildGraph(filter, highlighted, t), [filter, highlighted, t])
   const connectedSet = useMemo(() => highlighted ? getUpstreamDownstream(highlighted) : null, [highlighted])
 
   const handleWheel = useCallback((e: React.WheelEvent) => {
@@ -194,7 +194,7 @@ export default function RecipeDAG() {
                   fill={color + '25'} stroke={isHL ? '#ffffff' : color} strokeWidth={isHL ? 2 : 1} />
                 <text x={n.x} y={n.y + 1} textAnchor="middle" dominantBaseline="middle"
                   fill={dim ? '#ffffff30' : '#ffffffcc'} fontSize={10} fontFamily="sans-serif">
-                  {n.item.name}
+                  {t(`item.${n.id}`)}
                 </text>
               </g>
             )
