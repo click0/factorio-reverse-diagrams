@@ -1,0 +1,35 @@
+name: Release Build
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Archive dist
+        run: tar -czf factorio-reverse-diagrams-${{ github.ref_name || 'dev' }}.tar.gz -C dist .
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-build
+          path: factorio-reverse-diagrams-*.tar.gz
+          retention-days: 30
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: factorio-reverse-diagrams-*.tar.gz
+          generate_release_notes: true
