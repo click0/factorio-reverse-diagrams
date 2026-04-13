@@ -81,10 +81,13 @@ export default function Sidebar({ onClose }: SidebarProps) {
             UK
           </button>
         </div>
-        <div style={{ marginTop: 8, lineHeight: 1.4 }}>
+        <div style={{ marginTop: 8, lineHeight: 1.6 }}>
           <span style={{ color: 'var(--accent)', fontSize: 11 }}>v0.44</span>
           <br />
-          <span style={{ fontSize: 10 }}>&copy; 2026 Vladyslav V. Prodan</span>
+          <a href="https://github.com/click0/factorio-reverse-diagrams" target="_blank" rel="noopener noreferrer"
+            style={{ fontSize: 10, color: 'var(--text-muted)', textDecoration: 'none' }}>
+            &copy; 2026 Vladyslav V. Prodan
+          </a>
         </div>
       </div>
     </>
