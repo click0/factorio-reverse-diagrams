@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.38.0] - 2026-04-12
+
+### Added
+- **Mining Productivity widget** — infinite research scaling curve with interactive SVG chart, hover for per-level details, configurable speed modules (0-3), exponential cost visualization
+- **Noise Visualizer widget** — Perlin noise terrain generator with Canvas pixel rendering (128x128), adjustable seed/frequency/octaves/persistence, terrain color mapping (water/grass/forest/desert/rock), ore patch overlay toggle
+- **Space Platform widget** (Space Age) — interplanetary route calculator with SVG solar system map, 6 routes (Nauvis→Vulcanus/Fulgora/Gleba/Aquilo), thruster/width configuration, travel time/fuel/asteroid estimation, drag vs thrust visualization
+- Full Ukrainian translations for all 3 new widgets
+- Navigation sidebar and landing page updated with 17 total diagrams
+
 ## [0.37.0] - 2026-04-12
 
 ### Added
