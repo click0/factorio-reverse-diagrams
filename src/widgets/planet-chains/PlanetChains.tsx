@@ -192,7 +192,7 @@ export default function PlanetChains() {
               <rect x={pos.x - NODE_W / 2} y={pos.y} width={NODE_W} height={NODE_H} rx={4}
                 fill={it.color + '20'} stroke={it.color + '80'} strokeWidth={1} />
               <text x={pos.x} y={pos.y + NODE_H / 2 + 4} textAnchor="middle"
-                fill="#ffffffcc" fontSize={9}>{t(`planet.item.${it.id}`, it.id)}</text>
+                fill="#ffffffcc" fontSize={9}>{t(`planet.item.${it.id}`)}</text>
             </g>
           )
         })}
@@ -201,7 +201,7 @@ export default function PlanetChains() {
       {/* Unique buildings */}
       <div style={{ marginTop: 10, fontSize: 12, color: 'var(--text-secondary)' }}>
         <strong style={{ color }}>{t('planet.uniqueBuildings')}:</strong>{' '}
-        {planet.uniqueBuildings.map(b => t(`planet.building.${b}`, b)).join(', ')}
+        {planet.uniqueBuildings.map(b => t(`planet.building.${b}`)).join(', ')}
       </div>
     </div>
   )
