@@ -22,6 +22,10 @@ export default function BiterAI() {
   const cW = GRID * CELL + PAD * 2
   const cH = GRID * CELL + PAD * 2
 
+  const tickL = t('common.tick')
+  const bitersL = t('biter.activeBiters')
+  const killsL = t('biter.kills')
+
   const draw = useCallback((ctx: CanvasRenderingContext2D, st: BiterState) => {
     ctx.fillStyle = '#0a0e08'
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
@@ -97,7 +101,7 @@ export default function BiterAI() {
     ctx.fillStyle = '#ffffff50'
     ctx.font = '9px monospace'
     ctx.textAlign = 'left'
-    ctx.fillText(`Tick ${st.tick} | Biters: ${st.biters.length} | Kills: ${st.kills}`, PAD, ctx.canvas.height - 3)
+    ctx.fillText(`${tickL} ${st.tick} | ${bitersL}: ${st.biters.length} | ${killsL}: ${st.kills}`, PAD, ctx.canvas.height - 3)
   }, [])
 
   useEffect(() => {

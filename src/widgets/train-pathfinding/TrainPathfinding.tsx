@@ -285,7 +285,7 @@ export default function TrainPathfinding() {
     const blockLabels = [{ x: 4.5, id: 0 }, { x: 11.5, id: 1 }, { x: 17, id: 2 }, { x: 21, id: 3 }]
     for (const bl of blockLabels) {
       ctx.fillStyle = SIGNAL_COLORS[st.blockStates[bl.id]] + 'cc'
-      ctx.fillText(`Block ${bl.id}`, PAD + bl.x * CELL, PAD + (y + 2) * CELL - 2)
+      ctx.fillText(`${t('common.block')} ${bl.id}`, PAD + bl.x * CELL, PAD + (y + 2) * CELL - 2)
     }
   }, [])
 
