@@ -35,6 +35,7 @@ const widgetLoaders: Record<string, () => Promise<{ default: React.ComponentType
   'multi-surface': () => import('../widgets/multi-surface/MultiSurface'),
   'new-machines': () => import('../widgets/new-machines/NewMachines'),
   'planet-chains': () => import('../widgets/planet-chains/PlanetChains'),
+  'biter-ai': () => import('../widgets/biter-ai/BiterAI'),
 }
 
 const lazyCache = new Map<string, React.LazyExoticComponent<React.ComponentType>>()

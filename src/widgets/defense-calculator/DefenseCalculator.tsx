@@ -108,7 +108,7 @@ export default function DefenseCalculator() {
     ctx.fillStyle = '#ffffff40'
     ctx.font = '10px monospace'
     ctx.textAlign = 'center'
-    ctx.fillText('Factory', CENTER, CENTER + 4)
+    ctx.fillText(t('common.factory'), CENTER, CENTER + 4)
   }, [turretCounts, wallLayers, dragonTeeth])
 
   useEffect(() => {

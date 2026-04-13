@@ -33,6 +33,74 @@ Five flagship interactive diagrams implemented:
 - GitHub: [github.com/click0](https://github.com/click0)
 - Phone: +38(099)6053340
 
+## Embedding in Your Website
+
+Any diagram can be embedded into an external website via iframe. Embed pages render **only the widget** — no sidebar, no header, no navigation.
+
+### URL Format
+
+```
+https://click0.github.io/factorio-reverse-diagrams/#/embed/{widget-id}
+```
+
+### Example: Embed Belt Mechanics
+
+```html
+<iframe
+  src="https://click0.github.io/factorio-reverse-diagrams/#/embed/belt-simulator"
+  width="800"
+  height="500"
+  frameborder="0"
+  style="border: 1px solid #2a2a4e; border-radius: 8px;"
+></iframe>
+```
+
+### Available Widget IDs
+
+| Category | Widget ID | Description |
+|----------|-----------|-------------|
+| Transport | `belt-simulator` | Belt slot animation with side-loading, splitter |
+| Transport | `inserter-cycle` | Inserter swing arc with tick timing |
+| Transport | `fluid-system` | Pipe pressure/flow simulator |
+| Transport | `train-pathfinding` | Rail block and signal visualization |
+| Transport | `train-interrupts` | Train 2.0 interrupt simulator |
+| Production | `recipe-dag` | Full recipe dependency graph |
+| Production | `beacon-layout` | Beacon/module placement calculator |
+| Production | `new-machines` | Machine comparison (incl. Space Age) |
+| Production | `mining-productivity` | Infinite research scaling curve |
+| Energy | `power-calculator` | Solar/nuclear ratio calculator |
+| Energy | `solar-curve` | Day/night solar output simulation |
+| Energy | `electric-network` | Power pole topology |
+| Energy | `power-failure` | Brownout cascade simulator |
+| Combat | `pollution-heatmap` | Pollution diffusion heatmap |
+| Combat | `evolution-curve` | Evolution factor visualization |
+| Combat | `defense-calculator` | Turret DPS and range calculator |
+| Combat | `biter-ai` | Biter attack wave simulator |
+| Circuit | `combinator-sandbox` | Interactive circuit network simulator |
+| Circuit | `circuit-2` | Circuit 2.0 (selector, display panel) |
+| Space Age | `quality-markov` | Quality grind Markov chain |
+| Space Age | `spoilage-timeline` | Spoilage survival calculator |
+| Space Age | `space-platform` | Interplanetary route calculator |
+| Space Age | `multi-surface` | Surface hierarchy viewer |
+| Space Age | `planet-chains` | Per-planet resource chains |
+| Map Gen | `noise-visualizer` | Perlin noise terrain generator |
+| Core | `game-tick` | Game loop phases timeline |
+| Core | `chunk-system` | Chunk grid with radar scan |
+| Core | `entity-lifecycle` | Entity state machine |
+| Meta | `system-overview` | System of systems causal loops |
+| Meta | `blueprint-analyzer` | Blueprint JSON analyzer |
+| Meta | `ups-optimizer` | UPS budget calculator |
+| Meta | `tech-tree` | Technology tree explorer |
+| Meta | `robot-logistics` | Roboport coverage visualizer |
+
+### Notes
+
+- Widgets inherit the dark Factorio theme automatically
+- Language can be set via URL: append `?lng=uk` for Ukrainian
+- All interactive controls (play/pause, sliders) work inside iframe
+- No X-Frame-Options or CSP headers blocking — embedding is unrestricted
+- Each widget is lazy-loaded (2–10 KB gzip per widget)
+
 ## Repository Structure
 
 ```

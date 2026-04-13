@@ -138,7 +138,7 @@ export default function TechTree() {
       {selectedTech && (
         <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border)', borderRadius: 6, padding: 14, marginTop: 10 }}>
           <strong style={{ color: 'var(--accent)' }}>{t(`tech.${selectedTech.id}`)}</strong>
-          <span style={{ fontSize: 11, color: 'var(--text-muted)', marginLeft: 8 }}>Tier {selectedTech.tier}</span>
+          <span style={{ fontSize: 11, color: 'var(--text-muted)', marginLeft: 8 }}>{t('common.tier')} {selectedTech.tier}</span>
           <div style={{ marginTop: 6, fontSize: 12, color: 'var(--text-secondary)' }}>
             {t('tech.cost')}: {selectedTech.cost} | {t('tech.packs')}: {selectedTech.sciencePacks.join(', ')}
           </div>

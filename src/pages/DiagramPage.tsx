@@ -37,6 +37,7 @@ const widgets: Record<string, { loader: () => Promise<{ default: React.Component
   'multi-surface': { loader: () => import('../widgets/multi-surface/MultiSurface'), titleKey: 'surface.title' },
   'new-machines': { loader: () => import('../widgets/new-machines/NewMachines'), titleKey: 'machines.title' },
   'planet-chains': { loader: () => import('../widgets/planet-chains/PlanetChains'), titleKey: 'planet.title' },
+  'biter-ai': { loader: () => import('../widgets/biter-ai/BiterAI'), titleKey: 'biter.title' },
 }
 
 export const DIAGRAM_ORDER = Object.keys(widgets)

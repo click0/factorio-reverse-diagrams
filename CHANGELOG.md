@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.44.0] - 2026-04-13
+
+### Added
+- **Biter AI widget** (5.3) — attack wave simulator on 32x32 Canvas grid: factory with turrets generates pollution, pollution diffuses across map, nests absorb pollution and spawn biter groups (size scales with evolution), biters pathfind around water to factory, turrets auto-fire on nearest in range. Controls: evolution slider (0-100%), pollution rate, nest count (1-8), play/pause/step/speed. Stats: active biters, kills, max pollution, absorbed pollution, breakdown by biter type (small/medium/big/behemoth)
+- Full Ukrainian translation
+- 33 total diagrams — all content plan sections implemented
+
 ## [0.43.0] - 2026-04-13
 
 ### Added
