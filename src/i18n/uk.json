@@ -816,6 +816,19 @@
   "planet.item.fluoroketone-cold": "Фторокетон (холодний)",
   "planet.item.fluoroketone-hot": "Фторокетон (гарячий)",
 
+  "planet.item.x-railgun-ammo": "→ Рейкотронні набої",
+  "planet.item.x-big-drill": "→ Великий бур",
+  "planet.item.x-concrete": "→ Бетон",
+  "planet.item.x-em-science": "→ ЕМ наук. пакет",
+  "planet.item.x-quality-module": "→ Модуль якості",
+  "planet.item.x-captive-spawner": "→ Полонений спаунер",
+  "planet.item.x-rocket-fuel": "→ Ракетне паливо",
+  "planet.item.x-cryo-science": "→ Кріо наук. пакет",
+  "planet.item.x-fusion-reactor": "→ Термоядерний реактор",
+
+  "planet.localRecipe": "Локальний рецепт",
+  "planet.exportUse": "Експорт / міжпланетне використання",
+
   "nav.biter": "ШІ кусак",
 
   "biter.title": "ШІ кусак",

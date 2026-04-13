@@ -817,6 +817,19 @@
   "planet.item.fluoroketone-cold": "Fluoroketone (cold)",
   "planet.item.fluoroketone-hot": "Fluoroketone (hot)",
 
+  "planet.item.x-railgun-ammo": "→ Railgun Ammo",
+  "planet.item.x-big-drill": "→ Big Mining Drill",
+  "planet.item.x-concrete": "→ Concrete",
+  "planet.item.x-em-science": "→ EM Science Pack",
+  "planet.item.x-quality-module": "→ Quality Module",
+  "planet.item.x-captive-spawner": "→ Captive Spawner",
+  "planet.item.x-rocket-fuel": "→ Rocket Fuel",
+  "planet.item.x-cryo-science": "→ Cryo Science Pack",
+  "planet.item.x-fusion-reactor": "→ Fusion Reactor",
+
+  "planet.localRecipe": "Local recipe",
+  "planet.exportUse": "Export / cross-planet use",
+
   "nav.biter": "Biter AI",
 
   "biter.title": "Biter AI",
