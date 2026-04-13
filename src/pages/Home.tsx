@@ -159,6 +159,7 @@ const diagrams = [
   { id: 'multi-surface', titleKey: 'surface.title', descKey: 'surface.description', tags: ['surface.tag.spaceAge', 'surface.tag.surfaces'] },
   { id: 'new-machines', titleKey: 'machines.title', descKey: 'machines.description', tags: ['machines.tag.production', 'machines.tag.comparison'] },
   { id: 'planet-chains', titleKey: 'planet.title', descKey: 'planet.description', tags: ['planet.tag.spaceAge', 'planet.tag.resources'] },
+  { id: 'biter-ai', titleKey: 'biter.title', descKey: 'biter.description', tags: ['biter.tag.combat', 'biter.tag.ai'] },
 ]
 
 export default function Home() {
