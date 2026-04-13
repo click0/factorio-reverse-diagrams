@@ -6,6 +6,9 @@ import PollutionHeatmap from '../widgets/pollution-heatmap/PollutionHeatmap'
 import QualityMarkov from '../widgets/quality-markov/QualityMarkov'
 import RecipeDAG from '../widgets/recipe-dag/RecipeDAG'
 import SystemOverview from '../widgets/system-overview/SystemOverview'
+import PowerCalculator from '../widgets/power-calculator/PowerCalculator'
+import InserterCycle from '../widgets/inserter-cycle/InserterCycle'
+import EvolutionCurve from '../widgets/evolution-curve/EvolutionCurve'
 
 const DIAGRAM_ORDER = [
   'belt-simulator',
@@ -13,6 +16,9 @@ const DIAGRAM_ORDER = [
   'pollution-heatmap',
   'quality-markov',
   'system-overview',
+  'power-calculator',
+  'inserter-cycle',
+  'evolution-curve',
 ]
 
 const widgetMeta: Record<string, { titleKey: string }> = {
@@ -21,6 +27,9 @@ const widgetMeta: Record<string, { titleKey: string }> = {
   'pollution-heatmap': { titleKey: 'pollution.title' },
   'quality-markov': { titleKey: 'quality.title' },
   'system-overview': { titleKey: 'system.title' },
+  'power-calculator': { titleKey: 'power.title' },
+  'inserter-cycle': { titleKey: 'inserter.title' },
+  'evolution-curve': { titleKey: 'evolution.title' },
 }
 
 function WidgetPlaceholder() {
@@ -41,6 +50,9 @@ function getWidget(widgetId: string) {
     case 'quality-markov': return <QualityMarkov />
     case 'recipe-dag': return <RecipeDAG />
     case 'system-overview': return <SystemOverview />
+    case 'power-calculator': return <PowerCalculator />
+    case 'inserter-cycle': return <InserterCycle />
+    case 'evolution-curve': return <EvolutionCurve />
     default: return <WidgetPlaceholder />
   }
 }

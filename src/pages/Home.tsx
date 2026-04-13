@@ -32,6 +32,24 @@ const diagrams = [
     descKey: 'system.description',
     tags: ['system.tag.causal', 'system.tag.overview'],
   },
+  {
+    id: 'power-calculator',
+    titleKey: 'power.title',
+    descKey: 'power.description',
+    tags: ['power.tag.calculator', 'power.tag.ratios'],
+  },
+  {
+    id: 'inserter-cycle',
+    titleKey: 'inserter.title',
+    descKey: 'inserter.description',
+    tags: ['inserter.tag.animation', 'inserter.tag.timing'],
+  },
+  {
+    id: 'evolution-curve',
+    titleKey: 'evolution.title',
+    descKey: 'evolution.description',
+    tags: ['evolution.tag.curve', 'evolution.tag.combat'],
+  },
 ]
 
 export default function Home() {
