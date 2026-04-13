@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.43.0] - 2026-04-13
+
+### Added
+- **Chunk System widget** (1.2) — Canvas chunk grid with active/charted/uncharted states, animated radar sweep revealing uncharted chunks, entity heatmap overlay, click to toggle chunk state
+- **Entity Lifecycle widget** (1.3) — SVG state machine for 3 entity types (Assembler, Inserter, Mining Drill) with states (placed→built→idle→active→damaged→destroyed), transition labels, hover highlighting
+- **Electric Network Topology widget** (4.1) — Canvas pole placement grid with 4 pole types (Small/Medium/Big/Substation), auto wire connections by range, supply area overlay, network count detection (warns if >1 network)
+- **Power Failure Cascade widget** (4.3) — SVG brownout cascade simulator with satisfaction slider, 8 systems with priority-based shutdown thresholds, per-system status bars with critical threshold markers
+- **Multi-Surface Architecture widget** (8.4) — SVG solar system view of Space Age surface hierarchy (Nauvis + 4 planets + 2 platforms), rocket routes, click for entity details, unique entities per surface
+- **New Machines Comparison widget** (8.7) — side-by-side machine comparison table: 10 machines (Assembler 1-3, EM Plant, Stone/Steel/Electric Furnace, Foundry, Chemical Plant, Biochamber), crafting speed, base productivity, power, module slots
+- **Planet Resource Chains widget** (8.10-8.13) — per-planet production chain DAGs for Vulcanus (lava→molten metal), Fulgora (scrap→holmium), Gleba (seeds→bioflux), Aquilo (ammonia→fusion), unique buildings listed
+- Full Ukrainian translations for all 7 new widgets
+- 32 total diagrams
+
 ## [0.42.0] - 2026-04-13
 
 ### Added
