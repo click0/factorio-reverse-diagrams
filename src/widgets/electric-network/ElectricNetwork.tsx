@@ -6,6 +6,7 @@ const CELL = 28
 const PAD = 6
 
 type PoleType = 'small' | 'medium' | 'big' | 'substation'
+type QualityTier = 'normal' | 'uncommon' | 'rare' | 'epic' | 'legendary'
 
 interface Pole {
   type: PoleType
@@ -13,39 +14,56 @@ interface Pole {
   col: number
 }
 
-const POLE_STATS: Record<PoleType, { wireReach: number; supplyArea: number; color: string; maxConn: number }> = {
-  small: { wireReach: 7, supplyArea: 2, color: '#e9a820', maxConn: 2 },
-  medium: { wireReach: 9, supplyArea: 3, color: '#4080e0', maxConn: 2 },
-  big: { wireReach: 30, supplyArea: 2, color: '#4caf50', maxConn: 4 },
-  substation: { wireReach: 18, supplyArea: 7, color: '#9c27b0', maxConn: 4 },
+const QUALITY_MULT: Record<QualityTier, number> = {
+  normal: 1.0, uncommon: 1.3, rare: 1.6, epic: 1.9, legendary: 2.5,
 }
 
-function getConnections(poles: Pole[]): [number, number][] {
-  // Build candidate connections sorted by distance (nearest first)
+const QUALITY_COLORS: Record<QualityTier, string> = {
+  normal: '#8a8a8a', uncommon: '#4caf50', rare: '#2196f3', epic: '#9c27b0', legendary: '#ff9800',
+}
+
+// Base stats (normal quality)
+const BASE_STATS: Record<PoleType, { wireReach: number; supplyArea: number; color: string; maxConn: number }> = {
+  small: { wireReach: 7.5, supplyArea: 2.5, color: '#e9a820', maxConn: 2 },
+  medium: { wireReach: 9, supplyArea: 3.5, color: '#4080e0', maxConn: 2 },
+  big: { wireReach: 30, supplyArea: 2, color: '#4caf50', maxConn: 4 },
+  substation: { wireReach: 18, supplyArea: 9, color: '#9c27b0', maxConn: 4 },
+}
+
+function getStats(type: PoleType, quality: QualityTier) {
+  const base = BASE_STATS[type]
+  const mult = QUALITY_MULT[quality]
+  return {
+    wireReach: base.wireReach * mult,
+    supplyArea: Math.ceil(base.supplyArea * mult),
+    color: base.color,
+    maxConn: base.maxConn, // maxConn not affected by quality
+  }
+}
+
+function getConnections(poles: Pole[], quality: QualityTier): [number, number][] {
   const candidates: { i: number; j: number; dist: number }[] = []
   for (let i = 0; i < poles.length; i++) {
     for (let j = i + 1; j < poles.length; j++) {
       const a = poles[i], b = poles[j]
       const dist = Math.sqrt((a.row - b.row) ** 2 + (a.col - b.col) ** 2)
-      const reach = Math.min(POLE_STATS[a.type].wireReach, POLE_STATS[b.type].wireReach)
-      if (dist <= reach / 2) {
+      const reachA = getStats(a.type, quality).wireReach / 2 // half reach in grid cells
+      const reachB = getStats(b.type, quality).wireReach / 2
+      if (dist <= Math.min(reachA, reachB)) {
         candidates.push({ i, j, dist })
       }
     }
   }
-  // Sort by distance — connect nearest poles first
   candidates.sort((a, b) => a.dist - b.dist)
 
-  // Respect maxConn limits per pole
   const connCount = new Map<number, number>()
   const connections: [number, number][] = []
 
   for (const { i, j } of candidates) {
     const aCount = connCount.get(i) || 0
     const bCount = connCount.get(j) || 0
-    const aMax = POLE_STATS[poles[i].type].maxConn
-    const bMax = POLE_STATS[poles[j].type].maxConn
-
+    const aMax = BASE_STATS[poles[i].type].maxConn
+    const bMax = BASE_STATS[poles[j].type].maxConn
     if (aCount < aMax && bCount < bMax) {
       connections.push([i, j])
       connCount.set(i, aCount + 1)
@@ -56,10 +74,10 @@ function getConnections(poles: Pole[]): [number, number][] {
   return connections
 }
 
-function getSuppliedCells(poles: Pole[]): Set<number> {
+function getSuppliedCells(poles: Pole[], quality: QualityTier): Set<number> {
   const supplied = new Set<number>()
   for (const pole of poles) {
-    const area = POLE_STATS[pole.type].supplyArea
+    const area = getStats(pole.type, quality).supplyArea
     for (let dr = -area; dr <= area; dr++) {
       for (let dc = -area; dc <= area; dc++) {
         const r = pole.row + dr, c = pole.col + dc
@@ -84,14 +102,15 @@ export default function ElectricNetwork() {
     { type: 'big', row: 12, col: 12 },
   ])
   const [tool, setTool] = useState<PoleType>('medium')
+  const [quality, setQuality] = useState<QualityTier>('normal')
+  const [showReach, setShowReach] = useState(true)
 
   const cW = GRID * CELL + PAD * 2
   const cH = GRID * CELL + PAD * 2
 
-  const connections = getConnections(poles)
-  const supplied = getSuppliedCells(poles)
+  const connections = getConnections(poles, quality)
+  const supplied = getSuppliedCells(poles, quality)
 
-  // Find networks via flood fill on connections
   const networkCount = (() => {
     const visited = new Set<number>()
     let count = 0
@@ -130,6 +149,25 @@ export default function ElectricNetwork() {
       }
     }
 
+    // Wire reach radius circles
+    if (showReach) {
+      for (const pole of poles) {
+        const stat = getStats(pole.type, quality)
+        const cx = PAD + pole.col * CELL + CELL / 2
+        const cy = PAD + pole.row * CELL + CELL / 2
+        const radiusPx = (stat.wireReach / 2) * CELL
+
+        // Wire reach (dashed circle)
+        ctx.strokeStyle = stat.color + '25'
+        ctx.lineWidth = 1
+        ctx.setLineDash([4, 4])
+        ctx.beginPath()
+        ctx.arc(cx, cy, radiusPx, 0, Math.PI * 2)
+        ctx.stroke()
+        ctx.setLineDash([])
+      }
+    }
+
     // Wire connections
     for (const [i, j] of connections) {
       const a = poles[i], b = poles[j]
@@ -152,7 +190,7 @@ export default function ElectricNetwork() {
     for (let pi = 0; pi < poles.length; pi++) {
       const pole = poles[pi]
       const px = PAD + pole.col * CELL, py = PAD + pole.row * CELL
-      const stat = POLE_STATS[pole.type]
+      const stat = getStats(pole.type, quality)
       const count = connPerPole.get(pi) || 0
       const atMax = count >= stat.maxConn
 
@@ -166,12 +204,11 @@ export default function ElectricNetwork() {
       ctx.textAlign = 'center'
       ctx.fillText(pole.type[0].toUpperCase(), px + CELL / 2, py + CELL / 2 + 1)
 
-      // Connection count indicator
       ctx.fillStyle = atMax ? '#ff9800' : '#ffffff60'
       ctx.font = '7px monospace'
       ctx.fillText(`${count}/${stat.maxConn}`, px + CELL / 2, py + CELL - 4)
     }
-  }, [poles, connections, supplied])
+  }, [poles, connections, supplied, quality, showReach])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -186,7 +223,6 @@ export default function ElectricNetwork() {
     const col = Math.floor(((e.clientX - rect.left) * scale - PAD) / CELL)
     const row = Math.floor(((e.clientY - rect.top) * scale - PAD) / CELL)
     if (col < 0 || col >= GRID || row < 0 || row >= GRID) return
-
     const existing = poles.findIndex(p => p.row === row && p.col === col)
     if (existing >= 0) {
       setPoles(prev => prev.filter((_, i) => i !== existing))
@@ -195,6 +231,12 @@ export default function ElectricNetwork() {
     }
   }
 
+  // Stats table for current quality
+  const statsForQuality = (['small', 'medium', 'big', 'substation'] as PoleType[]).map(pt => ({
+    type: pt,
+    ...getStats(pt, quality),
+  }))
+
   return (
     <div>
       <div className="controls-row">
@@ -202,7 +244,7 @@ export default function ElectricNetwork() {
           <label>{t('electric.place')}:</label>
           {(['small', 'medium', 'big', 'substation'] as PoleType[]).map(pt => (
             <button key={pt} className={`btn ${tool === pt ? 'active' : ''}`}
-              style={tool === pt ? { borderColor: POLE_STATS[pt].color, color: POLE_STATS[pt].color } : {}}
+              style={tool === pt ? { borderColor: BASE_STATS[pt].color, color: BASE_STATS[pt].color } : {}}
               onClick={() => setTool(pt)}>
               {t(`electric.${pt}`)}
             </button>
@@ -211,14 +253,58 @@ export default function ElectricNetwork() {
         <button className="btn" onClick={() => setPoles([])}>{t('controls.reset')}</button>
       </div>
 
+      <div className="controls-row">
+        <div className="control-group">
+          <label>{t('electric.quality')}:</label>
+          {(['normal', 'uncommon', 'rare', 'epic', 'legendary'] as QualityTier[]).map(q => (
+            <button key={q} className={`btn ${quality === q ? 'active' : ''}`}
+              style={quality === q ? { borderColor: QUALITY_COLORS[q], color: QUALITY_COLORS[q] } : {}}
+              onClick={() => setQuality(q)}>
+              {t(`electric.q.${q}`)}
+            </button>
+          ))}
+        </div>
+        <div className="control-group">
+          <label>
+            <input type="checkbox" checked={showReach} onChange={e => setShowReach(e.target.checked)} />
+            {' '}{t('electric.showReach')}
+          </label>
+        </div>
+      </div>
+
       <div style={{ display: 'flex', gap: 16, marginTop: 8, flexWrap: 'wrap' }}>
         <canvas ref={canvasRef} width={cW} height={cH} onClick={handleClick}
           style={{ display: 'block', borderRadius: 4, cursor: 'crosshair', maxWidth: '100%' }} />
-        <div style={{ flex: 1, minWidth: 160, display: 'flex', flexDirection: 'column', gap: 8 }}>
+        <div style={{ flex: 1, minWidth: 180, display: 'flex', flexDirection: 'column', gap: 8 }}>
           <Stat label={t('electric.poles')} value={`${poles.length}`} />
           <Stat label={t('electric.networks')} value={`${networkCount}`} color={networkCount > 1 ? '#ff9800' : '#4caf50'} />
           <Stat label={t('electric.coverage')} value={`${(supplied.size / (GRID * GRID) * 100).toFixed(1)}%`} color="#e9a820" />
           <Stat label={t('electric.connections')} value={`${connections.length}`} />
+
+          {/* Pole stats table for current quality */}
+          <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border)', borderRadius: 6, padding: '8px 10px', fontSize: 10 }}>
+            <div style={{ color: 'var(--text-muted)', marginBottom: 4, fontWeight: 600 }}>{t('electric.statsAt')} {t(`electric.q.${quality}`)}</div>
+            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+              <thead>
+                <tr style={{ color: 'var(--text-muted)' }}>
+                  <th style={{ textAlign: 'left', padding: '2px 4px' }}>{t('electric.type')}</th>
+                  <th style={{ textAlign: 'right', padding: '2px 4px' }}>{t('electric.reach')}</th>
+                  <th style={{ textAlign: 'right', padding: '2px 4px' }}>{t('electric.area')}</th>
+                  <th style={{ textAlign: 'right', padding: '2px 4px' }}>{t('electric.maxC')}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {statsForQuality.map(s => (
+                  <tr key={s.type}>
+                    <td style={{ padding: '2px 4px', color: s.color }}>{t(`electric.${s.type}`)}</td>
+                    <td style={{ padding: '2px 4px', textAlign: 'right', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>{s.wireReach.toFixed(1)}</td>
+                    <td style={{ padding: '2px 4px', textAlign: 'right', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>{s.supplyArea}</td>
+                    <td style={{ padding: '2px 4px', textAlign: 'right', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>{s.maxConn}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
