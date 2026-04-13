@@ -24,6 +24,9 @@ const diagrams = [
   { id: 'game-tick', labelKey: 'nav.gameTick' },
   { id: 'defense-calculator', labelKey: 'nav.defense' },
   { id: 'robot-logistics', labelKey: 'nav.robots' },
+  { id: 'blueprint-analyzer', labelKey: 'nav.blueprint' },
+  { id: 'ups-optimizer', labelKey: 'nav.ups' },
+  { id: 'circuit-2', labelKey: 'nav.circuit2' },
 ]
 
 interface SidebarProps {
@@ -71,7 +74,7 @@ export default function Sidebar({ onClose }: SidebarProps) {
           </button>
         </div>
         <div style={{ marginTop: 8, lineHeight: 1.4 }}>
-          <span style={{ color: 'var(--accent)', fontSize: 11 }}>v0.40</span>
+          <span style={{ color: 'var(--accent)', fontSize: 11 }}>v0.42</span>
           <br />
           <span style={{ fontSize: 10 }}>&copy; 2026 Vladyslav V. Prodan</span>
         </div>
