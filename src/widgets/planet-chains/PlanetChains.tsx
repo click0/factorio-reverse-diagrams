@@ -14,18 +14,28 @@ const PLANETS: PlanetResource[] = [
     items: [
       { id: 'calcite', color: '#e0d0b0' },
       { id: 'tungsten-ore', color: '#708090' },
-      { id: 'tungsten-plate', color: '#8a9aaa' },
+      { id: 'coal', color: '#3a3a3a' },
       { id: 'lava', color: '#ff4400' },
       { id: 'molten-iron', color: '#c06030' },
       { id: 'molten-copper', color: '#d08040' },
+      { id: 'iron-plate', color: '#8a9bae' },
+      { id: 'copper-plate', color: '#d4874e' },
+      { id: 'tungsten-plate', color: '#8a9aaa' },
+      { id: 'carbon', color: '#505050' },
+      { id: 'tungsten-carbide', color: '#607080' },
+      { id: 'acid', color: '#c0ff00' },
     ],
     recipes: [
       { from: 'lava', to: 'molten-iron' },
       { from: 'lava', to: 'molten-copper' },
-      { from: 'calcite', to: 'tungsten-plate' },
-      { from: 'tungsten-ore', to: 'tungsten-plate' },
       { from: 'molten-iron', to: 'iron-plate' },
       { from: 'molten-copper', to: 'copper-plate' },
+      { from: 'calcite', to: 'tungsten-plate' },
+      { from: 'tungsten-ore', to: 'tungsten-plate' },
+      { from: 'acid', to: 'tungsten-plate' },
+      { from: 'coal', to: 'carbon' },
+      { from: 'tungsten-plate', to: 'tungsten-carbide' },
+      { from: 'carbon', to: 'tungsten-carbide' },
     ],
     uniqueBuildings: ['foundry', 'big-mining-drill'],
   },
@@ -35,15 +45,27 @@ const PLANETS: PlanetResource[] = [
       { id: 'scrap', color: '#8a8a6a' },
       { id: 'holmium-ore', color: '#4080c0' },
       { id: 'holmium-plate', color: '#5090d0' },
-      { id: 'lightning', color: '#ffff00' },
       { id: 'superconductor', color: '#60c0e0' },
+      { id: 'supercapacitor', color: '#40b0d0' },
+      { id: 'iron-plate', color: '#8a9bae' },
+      { id: 'copper-plate', color: '#d4874e' },
+      { id: 'steel-plate', color: '#b0b0b0' },
+      { id: 'green-circuit', color: '#4caf50' },
+      { id: 'lightning', color: '#ffff00' },
+      { id: 'ice', color: '#a0d0f0' },
     ],
     recipes: [
-      { from: 'scrap', to: 'holmium-ore' },
       { from: 'scrap', to: 'iron-plate' },
       { from: 'scrap', to: 'copper-plate' },
+      { from: 'scrap', to: 'steel-plate' },
+      { from: 'scrap', to: 'green-circuit' },
+      { from: 'scrap', to: 'holmium-ore' },
       { from: 'holmium-ore', to: 'holmium-plate' },
       { from: 'holmium-plate', to: 'superconductor' },
+      { from: 'superconductor', to: 'supercapacitor' },
+      { from: 'holmium-plate', to: 'supercapacitor' },
+      { from: 'lightning', to: 'lightning' }, // self — lightning rod generates power
+      { from: 'ice', to: 'ice' },
     ],
     uniqueBuildings: ['em-plant', 'lightning-rod', 'recycler'],
   },
@@ -52,17 +74,29 @@ const PLANETS: PlanetResource[] = [
     items: [
       { id: 'yumako-seed', color: '#ff9800' },
       { id: 'jellynut-seed', color: '#e91e63' },
+      { id: 'yumako-fruit', color: '#ffb040' },
+      { id: 'jelly', color: '#ff4081' },
+      { id: 'yumako-mash', color: '#ffc060' },
       { id: 'nutrients', color: '#8bc34a' },
       { id: 'bioflux', color: '#4caf50' },
       { id: 'biter-egg', color: '#f44336' },
       { id: 'pentapod-egg', color: '#9c27b0' },
+      { id: 'spoilage', color: '#6a5a4a' },
+      { id: 'ag-science', color: '#66bb6a' },
     ],
     recipes: [
-      { from: 'yumako-seed', to: 'nutrients' },
-      { from: 'jellynut-seed', to: 'nutrients' },
+      { from: 'yumako-seed', to: 'yumako-fruit' },
+      { from: 'jellynut-seed', to: 'jelly' },
+      { from: 'yumako-fruit', to: 'yumako-mash' },
+      { from: 'yumako-mash', to: 'nutrients' },
+      { from: 'jelly', to: 'nutrients' },
       { from: 'nutrients', to: 'bioflux' },
-      { from: 'biter-egg', to: 'small-biter' },
-      { from: 'pentapod-egg', to: 'small-pentapod' },
+      { from: 'bioflux', to: 'ag-science' },
+      { from: 'nutrients', to: 'ag-science' },
+      { from: 'biter-egg', to: 'spoilage' },
+      { from: 'pentapod-egg', to: 'spoilage' },
+      { from: 'yumako-fruit', to: 'spoilage' },
+      { from: 'jelly', to: 'spoilage' },
     ],
     uniqueBuildings: ['biochamber', 'agricultural-tower'],
   },
@@ -70,16 +104,28 @@ const PLANETS: PlanetResource[] = [
     id: 'aquilo',
     items: [
       { id: 'ammonia', color: '#00bcd4' },
+      { id: 'lithium-brine', color: '#90caf0' },
       { id: 'lithium', color: '#b0c4de' },
       { id: 'lithium-plate', color: '#c0d4ee' },
       { id: 'quantum-processor', color: '#e040ff' },
       { id: 'fusion-cell', color: '#ff6090' },
+      { id: 'fusion-power', color: '#ff80a0' },
+      { id: 'ice', color: '#a0d0f0' },
+      { id: 'fluoroketone-cold', color: '#70b0d0' },
+      { id: 'fluoroketone-hot', color: '#d07070' },
     ],
     recipes: [
-      { from: 'ammonia', to: 'lithium' },
+      { from: 'ammonia', to: 'lithium-brine' },
+      { from: 'ice', to: 'lithium-brine' },
+      { from: 'lithium-brine', to: 'lithium' },
       { from: 'lithium', to: 'lithium-plate' },
       { from: 'lithium-plate', to: 'quantum-processor' },
       { from: 'quantum-processor', to: 'fusion-cell' },
+      { from: 'lithium-plate', to: 'fusion-cell' },
+      { from: 'fusion-cell', to: 'fusion-power' },
+      { from: 'fluoroketone-cold', to: 'fluoroketone-hot' },
+      { from: 'fluoroketone-hot', to: 'fluoroketone-cold' },
+      { from: 'ammonia', to: 'fluoroketone-cold' },
     ],
     uniqueBuildings: ['cryogenic-plant', 'fusion-reactor', 'heating-tower'],
   },
@@ -92,9 +138,9 @@ const PLANET_COLORS: Record<string, string> = {
   aquilo: '#00bcd4',
 }
 
-const SVG_W = 650
-const SVG_H = 260
-const NODE_W = 80
+const SVG_W = 680
+const SVG_H = 340
+const NODE_W = 90
 const NODE_H = 26
 
 export default function PlanetChains() {
@@ -106,47 +152,60 @@ export default function PlanetChains() {
 
   // Layout items left to right based on recipe depth
   const depths = new Map<string, number>()
-  const queue = planet.items.filter(it => !planet.recipes.some(r => r.to === it.id)).map(it => it.id)
-  queue.forEach(id => depths.set(id, 0))
-  let maxDepth = 0
+  // Find source items (not produced by any recipe)
+  const produced = new Set(planet.recipes.map(r => r.to))
+  const sources = planet.items.filter(it => !produced.has(it.id) || planet.recipes.some(r => r.from === it.id && r.to === it.id))
 
+  for (const s of sources) {
+    if (!depths.has(s.id)) depths.set(s.id, 0)
+  }
+  // Also set items with no incoming recipe to depth 0
+  for (const it of planet.items) {
+    if (!planet.recipes.some(r => r.to === it.id && r.from !== it.id)) {
+      depths.set(it.id, 0)
+    }
+  }
+
+  // BFS to assign depths
+  let changed = true
   let safety = 0
-  while (queue.length && safety++ < 100) {
-    const cur = queue.shift()!
-    const curDepth = depths.get(cur) || 0
+  while (changed && safety++ < 20) {
+    changed = false
     for (const r of planet.recipes) {
-      if (r.from === cur) {
-        const newDepth = curDepth + 1
-        if (!depths.has(r.to) || depths.get(r.to)! < newDepth) {
-          depths.set(r.to, newDepth)
-          maxDepth = Math.max(maxDepth, newDepth)
-          queue.push(r.to)
-        }
+      if (r.from === r.to) continue // self-loop
+      const fromDepth = depths.get(r.from)
+      if (fromDepth === undefined) continue
+      const newDepth = fromDepth + 1
+      if (!depths.has(r.to) || depths.get(r.to)! < newDepth) {
+        depths.set(r.to, newDepth)
+        changed = true
       }
     }
   }
 
-  // Position by depth
+  // Items not reached
+  for (const it of planet.items) {
+    if (!depths.has(it.id)) depths.set(it.id, 0)
+  }
+
+  const maxDepth = Math.max(...depths.values(), 1)
+
+  // Group by depth
   const tiers = new Map<number, string[]>()
   for (const [id, depth] of depths) {
     if (!tiers.has(depth)) tiers.set(depth, [])
     tiers.get(depth)!.push(id)
   }
-  // Items not in any recipe
-  for (const it of planet.items) {
-    if (!depths.has(it.id)) {
-      if (!tiers.has(0)) tiers.set(0, [])
-      tiers.get(0)!.push(it.id)
-      depths.set(it.id, 0)
-    }
-  }
 
+  // Position
+  const PAD = 30
   const positions = new Map<string, { x: number; y: number }>()
   for (const [depth, ids] of tiers) {
-    const x = 40 + (depth / Math.max(1, maxDepth)) * (SVG_W - 80)
+    const x = PAD + NODE_W / 2 + (depth / maxDepth) * (SVG_W - PAD * 2 - NODE_W)
+    const totalH = ids.length * (NODE_H + 10) - 10
+    const startY = (SVG_H - totalH) / 2
     ids.forEach((id, i) => {
-      const y = 40 + i * (NODE_H + 14)
-      positions.set(id, { x, y })
+      positions.set(id, { x, y: startY + i * (NODE_H + 10) })
     })
   }
 
@@ -173,6 +232,7 @@ export default function PlanetChains() {
 
         {/* Recipe edges */}
         {planet.recipes.map((r, i) => {
+          if (r.from === r.to) return null // skip self-loops
           const from = positions.get(r.from)
           const to = positions.get(r.to)
           if (!from || !to) return null
@@ -192,7 +252,7 @@ export default function PlanetChains() {
               <rect x={pos.x - NODE_W / 2} y={pos.y} width={NODE_W} height={NODE_H} rx={4}
                 fill={it.color + '20'} stroke={it.color + '80'} strokeWidth={1} />
               <text x={pos.x} y={pos.y + NODE_H / 2 + 4} textAnchor="middle"
-                fill="#ffffffcc" fontSize={9}>{t(`planet.item.${it.id}`)}</text>
+                fill="#ffffffcc" fontSize={8}>{t(`planet.item.${it.id}`)}</text>
             </g>
           )
         })}
