@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.40.0] - 2026-04-12
+
+### Added
+- **Game Tick widget** — Factorio game loop phases visualized: animated SVG timeline showing 9 tick phases (Input, Transport, Entities, Electric, Fluids, Pollution, Combat, Robots, Render) with configurable UPS target, ms budget per phase, phase descriptions
+- **Defense Calculator widget** — turret DPS and range calculator with Canvas defense layout: 5 turret types (Gun, Laser, Flamethrower, Artillery, Tesla), wall layers, dragon teeth slow effect, damage breakdown by type, range circle visualization
+- **Robot Logistics widget** — roboport coverage zone visualizer with Canvas grid: place roboports and chests, see logistics and charge zone overlap, coverage percentage, charge port and robot capacity stats
+- Full Ukrainian translations for all 3 new widgets
+- Navigation sidebar and landing page updated with 22 total diagrams
+
 ## [0.39.0] - 2026-04-12
 
 ### Added
