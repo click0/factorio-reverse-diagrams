@@ -1,6 +1,6 @@
 {
   "name": "factorio-reverse-diagrams",
-  "version": "0.41.0",
+  "version": "0.42.0",
   "description": "> Mapping and translating the rules of Factorio's simulation into interactive explorable explanations.",
   "type": "module",
   "scripts": {

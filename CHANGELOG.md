@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.42.0] - 2026-04-13
+
+### Added
+- **Code splitting** — all 25 widgets now lazy-loaded with `React.lazy()`, main bundle reduced from 564KB to 337KB, each widget is a separate chunk (2-10KB gzip)
+- **Embed mode** — new route `/#/embed/:widgetId` renders widget without sidebar/header, suitable for iframe embedding
+- **Error boundaries** — widgets wrapped in ErrorBoundary component, shows error message and retry button on crash
+- **CONTRIBUTING.md** — guide for contributors: project structure, adding widgets, translations, code style, commit conventions
+
+### Changed
+- DiagramPage refactored: static imports replaced with lazy loading and Suspense with loading spinner
+
 ## [0.41.0] - 2026-04-12
 
 ### Added
