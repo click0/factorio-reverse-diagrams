@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export type ConditionType = 'circuit' | 'item-count' | 'fluid-count' | 'time' | 'inactivity' | 'full-cargo' | 'empty-cargo'
@@ -62,7 +62,7 @@ interface SimState {
   log: string[]
 }
 
-function simulateStep(st: SimState, schedule: ScheduleEntry[], interrupts: Interrupt[], t: (k: string) => string): SimState {
+function simulateStep(st: SimState, schedule: ScheduleEntry[], interrupts: Interrupt[]): SimState {
   const log = [...st.log]
   let { currentStopIdx, tick, waitTick, interrupted, interruptId } = st
   tick++
@@ -74,7 +74,7 @@ function simulateStep(st: SimState, schedule: ScheduleEntry[], interrupts: Inter
     if (interrupted && interruptId === int.id) continue
 
     let triggered = false
-    if (int.condition === 'item-count' && waitTick > 60) triggered = true // simulate low fuel after 60 ticks
+    if (int.condition === 'item-count' && waitTick > 60) triggered = true
     if (int.condition === 'inactivity' && waitTick > int.threshold / 5) triggered = true
     if (int.condition === 'time' && waitTick > int.threshold / 5) triggered = true
 
@@ -124,28 +124,31 @@ export default function TrainInterrupts() {
     currentStopIdx: 0, tick: 0, waitTick: 0, interrupted: false, interruptId: null, log: []
   })
   const [playing, setPlaying] = useState(false)
+  const [speed, setSpeed] = useState(1)
+  const rafRef = useRef(0)
+  const lastRef = useRef(0)
 
-  // Auto-step
-  const rafRef = { current: 0 }
-  const lastRef = { current: 0 }
-
-  useState(() => {
-    const loop = () => {
-      if (!playing) return
-      setSimState(prev => simulateStep(prev, schedule, interrupts, t))
-      setTimeout(loop, 200)
+  // Animation loop
+  useEffect(() => {
+    if (!playing) return
+    const interval = 1000 / (speed * 4)
+    const loop = (time: number) => {
+      if (time - lastRef.current >= interval) {
+        lastRef.current = time
+        setSimState((prev: SimState) => simulateStep(prev, schedule, interrupts))
+      }
+      rafRef.current = requestAnimationFrame(loop)
     }
-    if (playing) loop()
-  })
+    rafRef.current = requestAnimationFrame(loop)
+    return () => cancelAnimationFrame(rafRef.current)
+  }, [playing, speed, schedule, interrupts])
 
   const toggleInterrupt = (id: string) => {
     setInterrupts(prev => prev.map(i => i.id === id ? { ...i, enabled: !i.enabled } : i))
   }
 
-  const step = () => setSimState(prev => simulateStep(prev, schedule, interrupts, t))
+  const step = () => setSimState(prev => simulateStep(prev, schedule, interrupts))
   const reset = () => setSimState({ currentStopIdx: 0, tick: 0, waitTick: 0, interrupted: false, interruptId: null, log: [] })
-
-  const currentStop = STOPS.find(s => s.id === schedule[simState.currentStopIdx]?.stopId)
 
   // Layout schedule stops in a row
   const scheduleStops = schedule.map((e, i) => {
@@ -162,10 +165,18 @@ export default function TrainInterrupts() {
   return (
     <div>
       <div className="controls-row">
-        <button className="btn" onClick={() => setPlaying(!playing)}>{playing ? '⏸' : '▶'} {playing ? t('controls.pause') : t('controls.play')}</button>
+        <button className="btn" onClick={() => setPlaying(!playing)}>
+          {playing ? '⏸' : '▶'} {playing ? t('controls.pause') : t('controls.play')}
+        </button>
         <button className="btn" onClick={step}>{t('controls.step')}</button>
         <button className="btn" onClick={reset}>{t('controls.reset')}</button>
-        <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>{t('belt.tick')}: {simState.tick}</span>
+        <div className="control-group">
+          <label>{t('controls.speed')}:</label>
+          <input type="range" min={0.25} max={4} step={0.25} value={speed}
+            onChange={(e) => setSpeed(parseFloat(e.target.value))} />
+          <span style={{ fontSize: 12, color: 'var(--text-secondary)', minWidth: 36 }}>{speed}x</span>
+        </div>
+        <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>{t('common.tick')}: {simState.tick}</span>
       </div>
 
       {/* Interrupt toggles */}
@@ -190,8 +201,12 @@ export default function TrainInterrupts() {
               <rect x={s.x - NODE_W / 2} y={s.y - NODE_H / 2} width={NODE_W} height={NODE_H} rx={4}
                 fill={isCurrent ? s.color + '40' : s.color + '15'}
                 stroke={isCurrent ? '#ffffff' : s.color} strokeWidth={isCurrent ? 2 : 1} />
-              <text x={s.x} y={s.y - 2} textAnchor="middle" fill="#ffffffcc" fontSize={10} fontWeight="bold">{t(`train.stop.${s.id}`, s.name)}</text>
-              <text x={s.x} y={s.y + 12} textAnchor="middle" fill="#ffffff60" fontSize={8}>{t(CONDITION_LABELS[s.condition])}</text>
+              <text x={s.x} y={s.y - 2} textAnchor="middle" fill="#ffffffcc" fontSize={10} fontWeight="bold">
+                {t(`train.stop.${s.id}`, s.name)}
+              </text>
+              <text x={s.x} y={s.y + 12} textAnchor="middle" fill="#ffffff60" fontSize={8}>
+                {t(CONDITION_LABELS[s.condition])}
+              </text>
               {i < scheduleStops.length - 1 && (
                 <line x1={s.x + NODE_W / 2 + 4} y1={s.y} x2={scheduleStops[i + 1].x - NODE_W / 2 - 10} y2={scheduleStops[i + 1].y}
                   stroke="#ffffff30" strokeWidth={1.5} markerEnd="url(#train-arrow)" />
@@ -206,13 +221,17 @@ export default function TrainInterrupts() {
         )}
 
         {/* Interrupt targets */}
-        {intTargets.map((int, i) => (
+        {intTargets.map((int) => (
           <g key={int.id} style={{ opacity: int.enabled ? 1 : 0.3 }}>
             <rect x={int.x - NODE_W / 2} y={int.y - NODE_H / 2} width={NODE_W} height={NODE_H} rx={4}
               fill={simState.interruptId === int.id ? '#f4433630' : '#f4433610'}
               stroke={simState.interruptId === int.id ? '#f44336' : '#f4433660'} strokeWidth={1} strokeDasharray="4,2" />
-            <text x={int.x} y={int.y - 2} textAnchor="middle" fill="#f44336cc" fontSize={9} fontWeight="bold">⚡ {t(`train.int.${int.id}`, int.name)}</text>
-            <text x={int.x} y={int.y + 12} textAnchor="middle" fill="#ffffff50" fontSize={8}>→ {int.stop.name}</text>
+            <text x={int.x} y={int.y - 2} textAnchor="middle" fill="#f44336cc" fontSize={9} fontWeight="bold">
+              ⚡ {t(`train.int.${int.id}`, int.name)}
+            </text>
+            <text x={int.x} y={int.y + 12} textAnchor="middle" fill="#ffffff50" fontSize={8}>
+              → {t(`train.stop.${int.stop.id}`, int.stop.name)}
+            </text>
           </g>
         ))}
 
