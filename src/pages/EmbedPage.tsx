@@ -28,6 +28,13 @@ const widgetLoaders: Record<string, () => Promise<{ default: React.ComponentType
   'blueprint-analyzer': () => import('../widgets/blueprint-analyzer/BlueprintAnalyzer'),
   'ups-optimizer': () => import('../widgets/ups-optimizer/UPSOptimizer'),
   'circuit-2': () => import('../widgets/circuit-2/Circuit2'),
+  'chunk-system': () => import('../widgets/chunk-system/ChunkSystem'),
+  'entity-lifecycle': () => import('../widgets/entity-lifecycle/EntityLifecycle'),
+  'electric-network': () => import('../widgets/electric-network/ElectricNetwork'),
+  'power-failure': () => import('../widgets/power-failure/PowerFailure'),
+  'multi-surface': () => import('../widgets/multi-surface/MultiSurface'),
+  'new-machines': () => import('../widgets/new-machines/NewMachines'),
+  'planet-chains': () => import('../widgets/planet-chains/PlanetChains'),
 }
 
 const lazyCache = new Map<string, React.LazyExoticComponent<React.ComponentType>>()

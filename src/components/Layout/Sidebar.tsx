@@ -27,6 +27,13 @@ const diagrams = [
   { id: 'blueprint-analyzer', labelKey: 'nav.blueprint' },
   { id: 'ups-optimizer', labelKey: 'nav.ups' },
   { id: 'circuit-2', labelKey: 'nav.circuit2' },
+  { id: 'chunk-system', labelKey: 'nav.chunk' },
+  { id: 'entity-lifecycle', labelKey: 'nav.entityLife' },
+  { id: 'electric-network', labelKey: 'nav.electric' },
+  { id: 'power-failure', labelKey: 'nav.powerFail' },
+  { id: 'multi-surface', labelKey: 'nav.multiSurface' },
+  { id: 'new-machines', labelKey: 'nav.newMachines' },
+  { id: 'planet-chains', labelKey: 'nav.planetChains' },
 ]
 
 interface SidebarProps {
@@ -74,7 +81,7 @@ export default function Sidebar({ onClose }: SidebarProps) {
           </button>
         </div>
         <div style={{ marginTop: 8, lineHeight: 1.4 }}>
-          <span style={{ color: 'var(--accent)', fontSize: 11 }}>v0.42</span>
+          <span style={{ color: 'var(--accent)', fontSize: 11 }}>v0.43</span>
           <br />
           <span style={{ fontSize: 10 }}>&copy; 2026 Vladyslav V. Prodan</span>
         </div>

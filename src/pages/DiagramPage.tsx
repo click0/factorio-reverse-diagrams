@@ -30,6 +30,13 @@ const widgets: Record<string, { loader: () => Promise<{ default: React.Component
   'blueprint-analyzer': { loader: () => import('../widgets/blueprint-analyzer/BlueprintAnalyzer'), titleKey: 'blueprint.title' },
   'ups-optimizer': { loader: () => import('../widgets/ups-optimizer/UPSOptimizer'), titleKey: 'ups.title' },
   'circuit-2': { loader: () => import('../widgets/circuit-2/Circuit2'), titleKey: 'circuit2.title' },
+  'chunk-system': { loader: () => import('../widgets/chunk-system/ChunkSystem'), titleKey: 'chunk.title' },
+  'entity-lifecycle': { loader: () => import('../widgets/entity-lifecycle/EntityLifecycle'), titleKey: 'entity.title' },
+  'electric-network': { loader: () => import('../widgets/electric-network/ElectricNetwork'), titleKey: 'electric.title' },
+  'power-failure': { loader: () => import('../widgets/power-failure/PowerFailure'), titleKey: 'powerFail.title' },
+  'multi-surface': { loader: () => import('../widgets/multi-surface/MultiSurface'), titleKey: 'surface.title' },
+  'new-machines': { loader: () => import('../widgets/new-machines/NewMachines'), titleKey: 'machines.title' },
+  'planet-chains': { loader: () => import('../widgets/planet-chains/PlanetChains'), titleKey: 'planet.title' },
 }
 
 export const DIAGRAM_ORDER = Object.keys(widgets)

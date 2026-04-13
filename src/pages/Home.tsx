@@ -152,6 +152,13 @@ const diagrams = [
     descKey: 'circuit2.description',
     tags: ['circuit2.tag.circuit', 'circuit2.tag.new'],
   },
+  { id: 'chunk-system', titleKey: 'chunk.title', descKey: 'chunk.description', tags: ['chunk.tag.core', 'chunk.tag.map'] },
+  { id: 'entity-lifecycle', titleKey: 'entity.title', descKey: 'entity.description', tags: ['entity.tag.core', 'entity.tag.states'] },
+  { id: 'electric-network', titleKey: 'electric.title', descKey: 'electric.description', tags: ['electric.tag.energy', 'electric.tag.topology'] },
+  { id: 'power-failure', titleKey: 'powerFail.title', descKey: 'powerFail.description', tags: ['powerFail.tag.energy', 'powerFail.tag.cascade'] },
+  { id: 'multi-surface', titleKey: 'surface.title', descKey: 'surface.description', tags: ['surface.tag.spaceAge', 'surface.tag.surfaces'] },
+  { id: 'new-machines', titleKey: 'machines.title', descKey: 'machines.description', tags: ['machines.tag.production', 'machines.tag.comparison'] },
+  { id: 'planet-chains', titleKey: 'planet.title', descKey: 'planet.description', tags: ['planet.tag.spaceAge', 'planet.tag.resources'] },
 ]
 
 export default function Home() {
