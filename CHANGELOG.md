@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.37.0] - 2026-04-12
+
+### Added
+- **Fluid System widget** — interactive pipe network simulator with Canvas grid placement (pipe, pump, source, drain), pressure equalization algorithm, real-time pressure visualization with color gradient, average pressure stats
+- **Tech Tree Explorer widget** — SVG technology tree with 14 technologies across 6 tiers, click to highlight prerequisite chain, search/filter, science pack and cost display per technology
+- **Solar Curve widget** — detailed day/night solar simulation with configurable load (MW), panel count, and accumulator count; SVG chart showing solar output curve, accumulator charge level, blackout zones; optimal panel/accumulator calculator
+- Full Ukrainian translations for all 3 new widgets
+- Navigation sidebar and landing page updated with 14 total diagrams
+
 ## [0.36.0] - 2026-04-12
 
 ### Added

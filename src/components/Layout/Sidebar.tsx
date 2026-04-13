@@ -13,6 +13,9 @@ const diagrams = [
   { id: 'train-interrupts', labelKey: 'nav.train' },
   { id: 'spoilage-timeline', labelKey: 'nav.spoilage' },
   { id: 'beacon-layout', labelKey: 'nav.beacon' },
+  { id: 'fluid-system', labelKey: 'nav.fluid' },
+  { id: 'tech-tree', labelKey: 'nav.tech' },
+  { id: 'solar-curve', labelKey: 'nav.solar' },
 ]
 
 interface SidebarProps {
@@ -60,7 +63,7 @@ export default function Sidebar({ onClose }: SidebarProps) {
           </button>
         </div>
         <div style={{ marginTop: 8, lineHeight: 1.4 }}>
-          <span style={{ color: 'var(--accent)', fontSize: 11 }}>v0.36</span>
+          <span style={{ color: 'var(--accent)', fontSize: 11 }}>v0.37</span>
           <br />
           <span style={{ fontSize: 10 }}>&copy; 2026 Vladyslav V. Prodan</span>
         </div>
