@@ -21,17 +21,38 @@ const POLE_STATS: Record<PoleType, { wireReach: number; supplyArea: number; colo
 }
 
 function getConnections(poles: Pole[]): [number, number][] {
-  const connections: [number, number][] = []
+  // Build candidate connections sorted by distance (nearest first)
+  const candidates: { i: number; j: number; dist: number }[] = []
   for (let i = 0; i < poles.length; i++) {
     for (let j = i + 1; j < poles.length; j++) {
       const a = poles[i], b = poles[j]
-      const dist = Math.max(Math.abs(a.row - b.row), Math.abs(a.col - b.col))
+      const dist = Math.sqrt((a.row - b.row) ** 2 + (a.col - b.col) ** 2)
       const reach = Math.min(POLE_STATS[a.type].wireReach, POLE_STATS[b.type].wireReach)
-      if (dist <= reach / 2) { // simplified: half wire reach in grid cells
-        connections.push([i, j])
+      if (dist <= reach / 2) {
+        candidates.push({ i, j, dist })
       }
     }
   }
+  // Sort by distance — connect nearest poles first
+  candidates.sort((a, b) => a.dist - b.dist)
+
+  // Respect maxConn limits per pole
+  const connCount = new Map<number, number>()
+  const connections: [number, number][] = []
+
+  for (const { i, j } of candidates) {
+    const aCount = connCount.get(i) || 0
+    const bCount = connCount.get(j) || 0
+    const aMax = POLE_STATS[poles[i].type].maxConn
+    const bMax = POLE_STATS[poles[j].type].maxConn
+
+    if (aCount < aMax && bCount < bMax) {
+      connections.push([i, j])
+      connCount.set(i, aCount + 1)
+      connCount.set(j, bCount + 1)
+    }
+  }
+
   return connections
 }
 
@@ -120,19 +141,35 @@ export default function ElectricNetwork() {
       ctx.stroke()
     }
 
+    // Count connections per pole
+    const connPerPole = new Map<number, number>()
+    for (const [i, j] of connections) {
+      connPerPole.set(i, (connPerPole.get(i) || 0) + 1)
+      connPerPole.set(j, (connPerPole.get(j) || 0) + 1)
+    }
+
     // Poles
-    for (const pole of poles) {
+    for (let pi = 0; pi < poles.length; pi++) {
+      const pole = poles[pi]
       const px = PAD + pole.col * CELL, py = PAD + pole.row * CELL
       const stat = POLE_STATS[pole.type]
-      ctx.fillStyle = stat.color + '50'
+      const count = connPerPole.get(pi) || 0
+      const atMax = count >= stat.maxConn
+
+      ctx.fillStyle = atMax ? '#ff980030' : stat.color + '50'
       ctx.fillRect(px + 3, py + 3, CELL - 6, CELL - 6)
-      ctx.strokeStyle = stat.color
-      ctx.lineWidth = 1.5
+      ctx.strokeStyle = atMax ? '#ff9800' : stat.color
+      ctx.lineWidth = atMax ? 2 : 1.5
       ctx.strokeRect(px + 3, py + 3, CELL - 6, CELL - 6)
       ctx.fillStyle = '#fff'
       ctx.font = '8px monospace'
       ctx.textAlign = 'center'
-      ctx.fillText(pole.type[0].toUpperCase(), px + CELL / 2, py + CELL / 2 + 3)
+      ctx.fillText(pole.type[0].toUpperCase(), px + CELL / 2, py + CELL / 2 + 1)
+
+      // Connection count indicator
+      ctx.fillStyle = atMax ? '#ff9800' : '#ffffff60'
+      ctx.font = '7px monospace'
+      ctx.fillText(`${count}/${stat.maxConn}`, px + CELL / 2, py + CELL - 4)
     }
   }, [poles, connections, supplied])
 
