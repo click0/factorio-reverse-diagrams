@@ -9,6 +9,9 @@ import SystemOverview from '../widgets/system-overview/SystemOverview'
 import PowerCalculator from '../widgets/power-calculator/PowerCalculator'
 import InserterCycle from '../widgets/inserter-cycle/InserterCycle'
 import EvolutionCurve from '../widgets/evolution-curve/EvolutionCurve'
+import TrainInterrupts from '../widgets/train-interrupts/TrainInterrupts'
+import SpoilageTimeline from '../widgets/spoilage-timeline/SpoilageTimeline'
+import BeaconLayout from '../widgets/beacon-layout/BeaconLayout'
 
 const DIAGRAM_ORDER = [
   'belt-simulator',
@@ -19,6 +22,9 @@ const DIAGRAM_ORDER = [
   'power-calculator',
   'inserter-cycle',
   'evolution-curve',
+  'train-interrupts',
+  'spoilage-timeline',
+  'beacon-layout',
 ]
 
 const widgetMeta: Record<string, { titleKey: string }> = {
@@ -30,6 +36,9 @@ const widgetMeta: Record<string, { titleKey: string }> = {
   'power-calculator': { titleKey: 'power.title' },
   'inserter-cycle': { titleKey: 'inserter.title' },
   'evolution-curve': { titleKey: 'evolution.title' },
+  'train-interrupts': { titleKey: 'train.title' },
+  'spoilage-timeline': { titleKey: 'spoilage.title' },
+  'beacon-layout': { titleKey: 'beacon.title' },
 }
 
 function WidgetPlaceholder() {
@@ -53,6 +62,9 @@ function getWidget(widgetId: string) {
     case 'power-calculator': return <PowerCalculator />
     case 'inserter-cycle': return <InserterCycle />
     case 'evolution-curve': return <EvolutionCurve />
+    case 'train-interrupts': return <TrainInterrupts />
+    case 'spoilage-timeline': return <SpoilageTimeline />
+    case 'beacon-layout': return <BeaconLayout />
     default: return <WidgetPlaceholder />
   }
 }
