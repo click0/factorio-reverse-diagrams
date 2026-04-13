@@ -186,7 +186,7 @@ export default function TrainInterrupts() {
           <button key={int.id} className={`btn ${int.enabled ? 'active' : ''}`}
             onClick={() => toggleInterrupt(int.id)}
             style={int.enabled ? { borderColor: '#f44336', color: '#f44336' } : {}}>
-            ⚡ {t(`train.int.${int.id}`, int.name)}
+            ⚡ {t(`train.int.${int.id}`, { defaultValue: int.name })}
           </button>
         ))}
       </div>
@@ -202,7 +202,7 @@ export default function TrainInterrupts() {
                 fill={isCurrent ? s.color + '40' : s.color + '15'}
                 stroke={isCurrent ? '#ffffff' : s.color} strokeWidth={isCurrent ? 2 : 1} />
               <text x={s.x} y={s.y - 2} textAnchor="middle" fill="#ffffffcc" fontSize={10} fontWeight="bold">
-                {t(`train.stop.${s.id}`, s.name)}
+                {t(`train.stop.${s.id}`, { defaultValue: s.name })}
               </text>
               <text x={s.x} y={s.y + 12} textAnchor="middle" fill="#ffffff60" fontSize={8}>
                 {t(CONDITION_LABELS[s.condition])}
@@ -227,10 +227,10 @@ export default function TrainInterrupts() {
               fill={simState.interruptId === int.id ? '#f4433630' : '#f4433610'}
               stroke={simState.interruptId === int.id ? '#f44336' : '#f4433660'} strokeWidth={1} strokeDasharray="4,2" />
             <text x={int.x} y={int.y - 2} textAnchor="middle" fill="#f44336cc" fontSize={9} fontWeight="bold">
-              ⚡ {t(`train.int.${int.id}`, int.name)}
+              ⚡ {t(`train.int.${int.id}`, { defaultValue: int.name })}
             </text>
             <text x={int.x} y={int.y + 12} textAnchor="middle" fill="#ffffff50" fontSize={8}>
-              → {t(`train.stop.${int.stop.id}`, int.stop.name)}
+              → {t(`train.stop.${int.stop.id}`, { defaultValue: int.stop.name })}
             </text>
           </g>
         ))}

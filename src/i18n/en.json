@@ -804,12 +804,6 @@
   "common.mw": "MW",
   "common.ms": "ms",
 
-  "train.stop.ironLoad": "Iron Loading",
-  "train.stop.ironUnload": "Iron Unloading",
-  "train.stop.copperLoad": "Copper Loading",
-  "train.stop.copperUnload": "Copper Unloading",
-  "train.stop.fuel": "Fuel Station",
-  "train.stop.depot": "Depot",
   "train.stop.iron-load": "Iron Loading",
   "train.stop.iron-unload": "Iron Unloading",
   "train.stop.copper-load": "Copper Loading",
