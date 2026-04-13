@@ -18,6 +18,8 @@ import SolarCurve from '../widgets/solar-curve/SolarCurve'
 import MiningProductivity from '../widgets/mining-productivity/MiningProductivity'
 import NoiseVisualizer from '../widgets/noise-visualizer/NoiseVisualizer'
 import SpacePlatform from '../widgets/space-platform/SpacePlatform'
+import CombinatorSandbox from '../widgets/combinator-sandbox/CombinatorSandbox'
+import TrainPathfinding from '../widgets/train-pathfinding/TrainPathfinding'
 
 const DIAGRAM_ORDER = [
   'belt-simulator',
@@ -37,6 +39,8 @@ const DIAGRAM_ORDER = [
   'mining-productivity',
   'noise-visualizer',
   'space-platform',
+  'combinator-sandbox',
+  'train-pathfinding',
 ]
 
 const widgetMeta: Record<string, { titleKey: string }> = {
@@ -57,6 +61,8 @@ const widgetMeta: Record<string, { titleKey: string }> = {
   'mining-productivity': { titleKey: 'mining.title' },
   'noise-visualizer': { titleKey: 'noise.title' },
   'space-platform': { titleKey: 'space.title' },
+  'combinator-sandbox': { titleKey: 'circuit.title' },
+  'train-pathfinding': { titleKey: 'trainPath.title' },
 }
 
 function WidgetPlaceholder() {
@@ -89,6 +95,8 @@ function getWidget(widgetId: string) {
     case 'mining-productivity': return <MiningProductivity />
     case 'noise-visualizer': return <NoiseVisualizer />
     case 'space-platform': return <SpacePlatform />
+    case 'combinator-sandbox': return <CombinatorSandbox />
+    case 'train-pathfinding': return <TrainPathfinding />
     default: return <WidgetPlaceholder />
   }
 }

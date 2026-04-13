@@ -19,6 +19,8 @@ const diagrams = [
   { id: 'mining-productivity', labelKey: 'nav.mining' },
   { id: 'noise-visualizer', labelKey: 'nav.noise' },
   { id: 'space-platform', labelKey: 'nav.space' },
+  { id: 'combinator-sandbox', labelKey: 'nav.circuit' },
+  { id: 'train-pathfinding', labelKey: 'nav.trainPath' },
 ]
 
 interface SidebarProps {
@@ -66,7 +68,7 @@ export default function Sidebar({ onClose }: SidebarProps) {
           </button>
         </div>
         <div style={{ marginTop: 8, lineHeight: 1.4 }}>
-          <span style={{ color: 'var(--accent)', fontSize: 11 }}>v0.38</span>
+          <span style={{ color: 'var(--accent)', fontSize: 11 }}>v0.39</span>
           <br />
           <span style={{ fontSize: 10 }}>&copy; 2026 Vladyslav V. Prodan</span>
         </div>
