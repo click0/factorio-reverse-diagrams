@@ -9,7 +9,7 @@ interface EdgePos { from: string; to: string; x1: number; y1: number; x2: number
 const NODE_W = 120
 const NODE_H = 32
 
-function buildGraph(filter: string, highlighted: string | null, translate: (key: string) => string) {
+function buildGraph(filter: string, translate: (key: string) => string) {
   const g = new dagre.graphlib.Graph()
   g.setGraph({ rankdir: 'LR', ranksep: 80, nodesep: 20 })
   g.setDefaultEdgeLabel(() => ({}))
@@ -17,7 +17,6 @@ function buildGraph(filter: string, highlighted: string | null, translate: (key:
   const itemMap = new Map(ITEMS.map(it => [it.id, it]))
   const usedItems = new Set<string>()
 
-  // Find which items to show
   for (const r of RECIPES) {
     usedItems.add(r.output)
     for (const inp of r.inputs) usedItems.add(inp.id)
@@ -72,38 +71,74 @@ function buildGraph(filter: string, highlighted: string | null, translate: (key:
 function getUpstreamDownstream(itemId: string): Set<string> {
   const connected = new Set<string>()
   connected.add(itemId)
-
-  // Upstream (ingredients of ingredients)
   const qUp = [itemId]
   while (qUp.length) {
     const cur = qUp.pop()!
     for (const r of RECIPES) {
       if (r.output === cur) {
         for (const inp of r.inputs) {
-          if (!connected.has(inp.id)) {
-            connected.add(inp.id)
-            qUp.push(inp.id)
-          }
+          if (!connected.has(inp.id)) { connected.add(inp.id); qUp.push(inp.id) }
         }
       }
     }
   }
-
-  // Downstream (products that use this)
   const qDown = [itemId]
   while (qDown.length) {
     const cur = qDown.pop()!
     for (const r of RECIPES) {
       if (r.inputs.some(inp => inp.id === cur)) {
-        if (!connected.has(r.output)) {
-          connected.add(r.output)
-          qDown.push(r.output)
-        }
+        if (!connected.has(r.output)) { connected.add(r.output); qDown.push(r.output) }
+      }
+    }
+  }
+  return connected
+}
+
+/** Find critical path: longest chain from any raw resource to target */
+function getCriticalPath(targetId: string): Set<string> {
+  const recipeMap = new Map<string, typeof RECIPES[0]>()
+  for (const r of RECIPES) recipeMap.set(r.output, r)
+
+  const rawIds = new Set(ITEMS.filter(it => it.category === 'raw').map(it => it.id))
+
+  // BFS backwards from target, tracking depth
+  const depths = new Map<string, number>()
+  const parents = new Map<string, string>()
+  const queue: { id: string; depth: number }[] = [{ id: targetId, depth: 0 }]
+  depths.set(targetId, 0)
+
+  while (queue.length) {
+    const { id, depth } = queue.shift()!
+    const recipe = recipeMap.get(id)
+    if (!recipe) continue
+    for (const inp of recipe.inputs) {
+      const newDepth = depth + 1
+      if (!depths.has(inp.id) || depths.get(inp.id)! < newDepth) {
+        depths.set(inp.id, newDepth)
+        parents.set(inp.id, id)
+        queue.push({ id: inp.id, depth: newDepth })
       }
     }
   }
 
-  return connected
+  // Find deepest raw resource
+  let maxDepth = 0
+  let deepestRaw = ''
+  for (const [id, depth] of depths) {
+    if (rawIds.has(id) && depth > maxDepth) { maxDepth = depth; deepestRaw = id }
+  }
+
+  if (!deepestRaw) return new Set()
+
+  // Trace path from deepest raw to target
+  const path = new Set<string>()
+  let cur = deepestRaw
+  path.add(cur)
+  while (parents.has(cur)) {
+    cur = parents.get(cur)!
+    path.add(cur)
+  }
+  return path
 }
 
 export default function RecipeDAG() {
@@ -111,13 +146,21 @@ export default function RecipeDAG() {
   const containerRef = useRef<HTMLDivElement>(null)
   const [filter, setFilter] = useState('')
   const [highlighted, setHighlighted] = useState<string | null>(null)
+  const [showCritical, setShowCritical] = useState(false)
+  const [rate, setRate] = useState(1)
   const [pan, setPan] = useState({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(0.85)
   const dragging = useRef(false)
   const lastMouse = useRef({ x: 0, y: 0 })
 
-  const graph = useMemo(() => buildGraph(filter, highlighted, t), [filter, highlighted, t])
+  const graph = useMemo(() => buildGraph(filter, t), [filter, t])
   const connectedSet = useMemo(() => highlighted ? getUpstreamDownstream(highlighted) : null, [highlighted])
+  const criticalPath = useMemo(() => {
+    if (!showCritical) return null
+    // Critical path to rocket-part (or highlighted item)
+    const target = highlighted || 'rocket-part'
+    return getCriticalPath(target)
+  }, [showCritical, highlighted])
 
   const handleWheel = useCallback((e: React.WheelEvent) => {
     e.preventDefault()
@@ -146,6 +189,17 @@ export default function RecipeDAG() {
           <button className="btn" onClick={() => setHighlighted(null)}>{t('recipe.clearHighlight')}</button>
         )}
         <div className="control-group">
+          <label>{t('recipe.rate')}:</label>
+          <input type="range" min={0.1} max={10} step={0.1} value={rate} onChange={(e) => setRate(Number(e.target.value))} />
+          <span style={{ fontSize: 12, color: 'var(--text-muted)', minWidth: 55 }}>{rate.toFixed(1)}{t('recipe.perMin')}</span>
+        </div>
+        <div className="control-group">
+          <label>
+            <input type="checkbox" checked={showCritical} onChange={(e) => setShowCritical(e.target.checked)} />
+            {' '}{t('recipe.criticalPath')}
+          </label>
+        </div>
+        <div className="control-group">
           <label>{t('recipe.zoom')}:</label>
           <input type="range" min={0.2} max={2} step={0.05} value={zoom} onChange={(e) => setZoom(Number(e.target.value))} />
           <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>{Math.round(zoom * 100)}%</span>
@@ -170,15 +224,21 @@ export default function RecipeDAG() {
             <marker id="dag-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
               <polygon points="0 0, 8 3, 0 6" fill="#ffffff50" />
             </marker>
+            <marker id="dag-arrow-crit" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+              <polygon points="0 0, 8 3, 0 6" fill="#e9a820" />
+            </marker>
           </defs>
 
           {/* Edges */}
           {graph.edges.map((e, i) => {
             const dim = connectedSet && (!connectedSet.has(e.from) || !connectedSet.has(e.to))
+            const isCrit = criticalPath && criticalPath.has(e.from) && criticalPath.has(e.to)
+            const thickness = Math.max(1, Math.min(6, e.amount * rate * 0.4))
             return (
               <line key={i} x1={e.x1} y1={e.y1} x2={e.x2} y2={e.y2}
-                stroke={dim ? '#ffffff08' : '#ffffff25'} strokeWidth={Math.max(1, Math.min(4, e.amount * 0.5))}
-                markerEnd="url(#dag-arrow)" />
+                stroke={isCrit ? '#e9a820' : dim ? '#ffffff08' : '#ffffff25'}
+                strokeWidth={isCrit ? Math.max(2.5, thickness) : thickness}
+                markerEnd={isCrit ? 'url(#dag-arrow-crit)' : 'url(#dag-arrow)'} />
             )
           })}
 
@@ -187,11 +247,14 @@ export default function RecipeDAG() {
             const color = CATEGORY_COLORS[n.item.category] || '#888'
             const dim = connectedSet && !connectedSet.has(n.id)
             const isHL = highlighted === n.id
+            const isCrit = criticalPath && criticalPath.has(n.id)
             return (
               <g key={n.id} onClick={() => setHighlighted(highlighted === n.id ? null : n.id)}
                 style={{ cursor: 'pointer', opacity: dim ? 0.12 : 1 }}>
                 <rect x={n.x - NODE_W / 2} y={n.y - NODE_H / 2} width={NODE_W} height={NODE_H} rx={4}
-                  fill={color + '25'} stroke={isHL ? '#ffffff' : color} strokeWidth={isHL ? 2 : 1} />
+                  fill={isCrit ? '#e9a82020' : color + '25'}
+                  stroke={isHL ? '#ffffff' : isCrit ? '#e9a820' : color}
+                  strokeWidth={isHL ? 2 : isCrit ? 2 : 1} />
                 <text x={n.x} y={n.y + 1} textAnchor="middle" dominantBaseline="middle"
                   fill={dim ? '#ffffff30' : '#ffffffcc'} fontSize={10} fontFamily="sans-serif">
                   {t(`item.${n.id}`)}
