@@ -160,6 +160,17 @@ const diagrams = [
   { id: 'new-machines', titleKey: 'machines.title', descKey: 'machines.description', tags: ['machines.tag.production', 'machines.tag.comparison'] },
   { id: 'planet-chains', titleKey: 'planet.title', descKey: 'planet.description', tags: ['planet.tag.spaceAge', 'planet.tag.resources'] },
   { id: 'biter-ai', titleKey: 'biter.title', descKey: 'biter.description', tags: ['biter.tag.combat', 'biter.tag.ai'] },
+  { id: 'common-ratios', titleKey: 'ratios.title', descKey: 'ratios.description', tags: ['ratios.tag.calculator', 'ratios.tag.ratios'] },
+  { id: 'oil-refining', titleKey: 'oil.title', descKey: 'oil.description', tags: ['oil.tag.flow', 'oil.tag.calculator'] },
+  { id: 'power-steam', titleKey: 'steam.title', descKey: 'steam.description', tags: ['steam.tag.calculator', 'steam.tag.energy'] },
+  { id: 'cargo-wagon', titleKey: 'cargo.title', descKey: 'cargo.description', tags: ['cargo.tag.trains', 'cargo.tag.throughput'] },
+  { id: 'fluid-wagon', titleKey: 'fluidWagon.title', descKey: 'fluidWagon.description', tags: ['fluidWagon.tag.trains', 'fluidWagon.tag.fluids'] },
+  { id: 'material-processing', titleKey: 'material.title', descKey: 'material.description', tags: ['material.tag.production', 'material.tag.smelting'] },
+  { id: 'prod-module-payoff', titleKey: 'prodModule.title', descKey: 'prodModule.description', tags: ['prodModule.tag.calculator', 'prodModule.tag.modules'] },
+  { id: 'balancers', titleKey: 'balancer.title', descKey: 'balancer.description', tags: ['balancer.tag.belts', 'balancer.tag.layout'] },
+  { id: 'inserter-capacity', titleKey: 'inserterCap.title', descKey: 'inserterCap.description', tags: ['inserterCap.tag.inserters', 'inserterCap.tag.research'] },
+  { id: 'vehicle-fuel', titleKey: 'vehicleFuel.title', descKey: 'vehicleFuel.description', tags: ['vehicleFuel.tag.vehicles', 'vehicleFuel.tag.fuel'] },
+  { id: 'train-colors', titleKey: 'trainColor.title', descKey: 'trainColor.description', tags: ['trainColor.tag.trains', 'trainColor.tag.colors'] },
 ]
 
 export default function Home() {
