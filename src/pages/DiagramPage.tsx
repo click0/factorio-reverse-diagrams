@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import WidgetShell from '../components/WidgetShell/WidgetShell'
 import ErrorBoundary from '../components/ErrorBoundary'
+import { DIAGRAM_SECTIONS } from '../components/Layout/Sidebar'
 
 const widgets: Record<string, { loader: () => Promise<{ default: React.ComponentType }>, titleKey: string }> = {
   'belt-simulator': { loader: () => import('../widgets/belt-simulator/BeltSimulator'), titleKey: 'belt.title' },
@@ -51,7 +52,8 @@ const widgets: Record<string, { loader: () => Promise<{ default: React.Component
   'train-colors': { loader: () => import('../widgets/train-colors/TrainColors'), titleKey: 'trainColor.title' },
 }
 
-export const DIAGRAM_ORDER = Object.keys(widgets)
+// Flat ordered list derived from sidebar sections
+export const DIAGRAM_ORDER = DIAGRAM_SECTIONS.flatMap(s => s.diagrams.map(d => d.id))
 
 // Cache lazy components so they aren't re-created on each render
 const lazyCache = new Map<string, React.LazyExoticComponent<React.ComponentType>>()

@@ -103,11 +103,12 @@ button {
 }
 
 .sidebar-nav {
-  padding: 12px 0;
+  padding: 8px 0;
   flex: 1;
+  overflow-y: auto;
 }
 
-.sidebar-nav a {
+.sidebar-nav > a {
   display: block;
   padding: 8px 16px;
   color: var(--text-secondary);
@@ -116,8 +117,71 @@ button {
   border-left: 3px solid transparent;
 }
 
-.sidebar-nav a:hover,
-.sidebar-nav a.active {
+.sidebar-nav > a:hover,
+.sidebar-nav > a.active {
+  background: rgba(233, 168, 32, 0.08);
+  color: var(--accent);
+  text-decoration: none;
+  border-left-color: var(--accent);
+}
+
+.sidebar-section {
+  border-bottom: 1px solid var(--border);
+}
+
+.sidebar-section-toggle {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: color 0.15s;
+  gap: 6px;
+}
+
+.sidebar-section-toggle:hover {
+  color: var(--text-secondary);
+}
+
+.sidebar-section-toggle.has-active {
+  color: var(--accent);
+}
+
+.sidebar-arrow {
+  display: inline-block;
+  font-size: 10px;
+  transition: transform 0.2s;
+}
+
+.sidebar-arrow.open {
+  transform: rotate(90deg);
+}
+
+.sidebar-section-count {
+  margin-left: auto;
+  font-size: 10px;
+  opacity: 0.5;
+  font-weight: 400;
+}
+
+.sidebar-section-items a {
+  display: block;
+  padding: 6px 16px 6px 28px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  transition: background 0.15s, color 0.15s;
+  border-left: 3px solid transparent;
+}
+
+.sidebar-section-items a:hover,
+.sidebar-section-items a.active {
   background: rgba(233, 168, 32, 0.08);
   color: var(--accent);
   text-decoration: none;
@@ -224,6 +288,27 @@ button {
   background: var(--accent);
   color: var(--bg-primary);
   border-color: var(--accent);
+}
+
+/* Home sections */
+.home-section {
+  margin-bottom: 8px;
+}
+
+.home-section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--accent);
+  padding: 0 24px;
+  margin: 24px 0 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+}
+
+.home-section:first-child .home-section-title {
+  margin-top: 8px;
 }
 
 /* Cards */

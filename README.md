@@ -17,15 +17,9 @@ A comprehensive reverse-engineering documentation of **Factorio's simulation** (
 
 Available in **English** and **Ukrainian**.
 
-## Status: Phase 1 — Interactive Diagrams (v0.33)
+## Status: 44 Interactive Diagrams (v0.50)
 
-Five flagship interactive diagrams implemented:
-
-1. **Belt Mechanics** — Canvas animation with 3 belt tiers, side-loading, splitter logic
-2. **Recipe DAG** — D3 + dagre dependency graph with search, pan/zoom, dependency tracing
-3. **Pollution Diffusion** — Canvas heatmap with cellular automaton, entity placement, tile absorption
-4. **Quality Grind** — Markov chain visualizer with module config and expected iterations calculator
-5. **System of Systems** — Causal loop diagram with 5 toggleable feedback loops
+All planned interactive diagrams are implemented across 11 thematic sections — from simulation core and belt mechanics to Space Age quality grind and cheat-sheet-style calculators.
 
 ## Author
 
@@ -57,41 +51,93 @@ https://click0.github.io/factorio-reverse-diagrams/#/embed/{widget-id}
 
 ### Available Widget IDs
 
-| Category | Widget ID | Description |
-|----------|-----------|-------------|
-| Transport | `belt-simulator` | Belt slot animation with side-loading, splitter |
-| Transport | `inserter-cycle` | Inserter swing arc with tick timing |
-| Transport | `fluid-system` | Pipe pressure/flow simulator |
-| Transport | `train-pathfinding` | Rail block and signal visualization |
-| Transport | `train-interrupts` | Train 2.0 interrupt simulator |
-| Production | `recipe-dag` | Full recipe dependency graph |
-| Production | `beacon-layout` | Beacon/module placement calculator |
-| Production | `new-machines` | Machine comparison (incl. Space Age) |
-| Production | `mining-productivity` | Infinite research scaling curve |
-| Energy | `power-calculator` | Solar/nuclear ratio calculator |
-| Energy | `solar-curve` | Day/night solar output simulation |
-| Energy | `electric-network` | Power pole topology |
-| Energy | `power-failure` | Brownout cascade simulator |
-| Combat | `pollution-heatmap` | Pollution diffusion heatmap |
-| Combat | `evolution-curve` | Evolution factor visualization |
-| Combat | `defense-calculator` | Turret DPS and range calculator |
-| Combat | `biter-ai` | Biter attack wave simulator |
-| Circuit | `combinator-sandbox` | Interactive circuit network simulator |
-| Circuit | `circuit-2` | Circuit 2.0 (selector, display panel) |
-| Space Age | `quality-markov` | Quality grind Markov chain |
-| Space Age | `spoilage-timeline` | Spoilage survival calculator |
-| Space Age | `space-platform` | Interplanetary route calculator |
-| Space Age | `multi-surface` | Surface hierarchy viewer |
-| Space Age | `planet-chains` | Per-planet resource chains |
-| Map Gen | `noise-visualizer` | Perlin noise terrain generator |
-| Core | `game-tick` | Game loop phases timeline |
-| Core | `chunk-system` | Chunk grid with radar scan |
-| Core | `entity-lifecycle` | Entity state machine |
-| Meta | `system-overview` | System of systems causal loops |
-| Meta | `blueprint-analyzer` | Blueprint JSON analyzer |
-| Meta | `ups-optimizer` | UPS budget calculator |
-| Meta | `tech-tree` | Technology tree explorer |
-| Meta | `robot-logistics` | Roboport coverage visualizer |
+#### Simulation Core
+| Widget ID | Description |
+|-----------|-------------|
+| `game-tick` | Game loop phases timeline |
+| `chunk-system` | Chunk grid with radar scan |
+| `entity-lifecycle` | Entity state machine |
+
+#### Transport & Logistics
+| Widget ID | Description |
+|-----------|-------------|
+| `belt-simulator` | Belt slot animation with side-loading, splitter |
+| `inserter-cycle` | Inserter swing arc with tick timing |
+| `inserter-capacity` | Inserter stack size by research level |
+| `balancers` | Belt balancer visual diagrams |
+| `train-pathfinding` | Rail block and signal visualization |
+| `train-interrupts` | Train 2.0 interrupt simulator |
+| `cargo-wagon` | Cargo wagon loading throughput calculator |
+| `fluid-wagon` | Fluid wagon throughput vs pipe comparison |
+| `robot-logistics` | Roboport coverage visualizer |
+
+#### Production
+| Widget ID | Description |
+|-----------|-------------|
+| `recipe-dag` | Full recipe dependency graph |
+| `beacon-layout` | Beacon/module placement calculator |
+| `new-machines` | Machine comparison (incl. Space Age) |
+| `common-ratios` | Common production ratio calculator |
+| `material-processing` | Smelting time and throughput calculator |
+| `prod-module-payoff` | Productivity module ROI calculator |
+
+#### Energy
+| Widget ID | Description |
+|-----------|-------------|
+| `power-calculator` | Solar/nuclear ratio calculator |
+| `power-steam` | Steam power boiler/engine ratio calculator |
+| `solar-curve` | Day/night solar output simulation |
+| `electric-network` | Power pole topology |
+| `power-failure` | Brownout cascade simulator |
+
+#### Oil Refining
+| Widget ID | Description |
+|-----------|-------------|
+| `oil-refining` | Oil processing flow diagram with fluid balance |
+
+#### Combat & Pollution
+| Widget ID | Description |
+|-----------|-------------|
+| `pollution-heatmap` | Pollution diffusion heatmap |
+| `evolution-curve` | Evolution factor visualization |
+| `biter-ai` | Biter attack wave simulator |
+| `defense-calculator` | Turret DPS and range calculator |
+
+#### Circuit Network
+| Widget ID | Description |
+|-----------|-------------|
+| `combinator-sandbox` | Interactive circuit network simulator |
+| `circuit-2` | Circuit 2.0 (selector, display panel) |
+
+#### Map Generation
+| Widget ID | Description |
+|-----------|-------------|
+| `noise-visualizer` | Perlin noise terrain generator |
+
+#### Space Age
+| Widget ID | Description |
+|-----------|-------------|
+| `quality-markov` | Quality grind Markov chain |
+| `spoilage-timeline` | Spoilage survival calculator |
+| `space-platform` | Interplanetary route calculator |
+| `multi-surface` | Surface hierarchy viewer |
+| `planet-chains` | Per-planet resource chains |
+| `tech-tree` | Technology tree explorer |
+
+#### Vehicles & Trains
+| Widget ID | Description |
+|-----------|-------------|
+| `vehicle-fuel` | Vehicle speed/acceleration fuel bonus |
+| `train-colors` | Train color palette with Factorio format |
+
+#### Meta & Analysis
+| Widget ID | Description |
+|-----------|-------------|
+| `system-overview` | System of systems causal loops |
+| `blueprint-analyzer` | Blueprint JSON analyzer |
+| `ups-optimizer` | UPS budget calculator |
+| `fluid-system` | Pipe pressure/flow simulator |
+| `mining-productivity` | Infinite research scaling curve |
 
 ### Notes
 
@@ -107,33 +153,25 @@ https://click0.github.io/factorio-reverse-diagrams/#/embed/{widget-id}
 factorio-reverse-diagrams/
 │
 ├── README.md                          ← You are here
+├── CONTRIBUTING.md                    ← Contribution guide
 ├── LICENSE-CODE.md                    ← BSD 3-Clause (code)
 ├── LICENSE-CONTENT.md                 ← CC BY-NC-SA 4.0 (text, diagrams, PDFs)
 ├── NOTICE.md                          ← Third-party attributions & disclaimers
 │
 ├── docs/                              ← Content plan (the "what")
-│   ├── en/
-│   │   └── content-plan.md            ← Full 10-part diagram content specification
-│   └── uk/
-│       └── (content-plan.md)          ← Ukrainian translation (pending)
+│   ├── en/content-plan.md             ← Full 10-part diagram content specification
+│   └── uk/                            ← Ukrainian translation
 │
 ├── planning/                          ← Project planning (the "how")
-│   ├── en/
-│   │   ├── project-plan.md            ← Phases, timeline, technology, risks
-│   │   ├── output-format.md           ← Format deep-dive: web, PDF, widgets, i18n
-│   │   ├── prior-art.md               ← 18 existing analogues analysed
-│   │   └── legal-plan.md              ← IP, copyright, licensing, AI images
-│   └── uk/
-│       ├── project-plan.md
-│       ├── output-format.md
-│       ├── prior-art.md
-│       └── legal-plan.md
-│
-├── data/                              ← Game data (auto-generated from factorio-data)
-│   └── (empty — populated by build pipeline)
+│   ├── en/                            ← project-plan, output-format, prior-art, legal-plan
+│   └── uk/                            ← Ukrainian translations
 │
 ├── src/                               ← Interactive widget source code
-│   └── (empty — implementation phase)
+│   ├── components/                    ← Shared components (Layout, ErrorBoundary, WidgetShell)
+│   ├── i18n/                          ← Translations (en.json, uk.json)
+│   ├── pages/                         ← Home, DiagramPage, EmbedPage
+│   ├── styles/                        ← Global CSS
+│   └── widgets/                       ← 44 widget directories (one per diagram)
 │
 └── assets/
     └── reference/
@@ -142,29 +180,20 @@ factorio-reverse-diagrams/
 
 ## Content Plan Overview
 
-| Part | Title | Sections | Diagrams |
-|------|-------|----------|----------|
-| I | Simulation Core | 1.1–1.4 | 4 |
-| II | Transport & Logistics | 2.1–2.5 | 5–7 |
-| III | Production | 3.1–3.5 | 5–6 |
-| IV | Energy | 4.1–4.3 | 4–5 |
-| V | Pollution, Evolution & Combat | 5.1–5.4 | 4–5 |
-| VI | Circuit Network | 6.1–6.3 | 3–4 |
-| VII | Map Generation | 7.1–7.3 | 3 |
-| VIII | 2.0 & Space Age | 8.1–8.16 | 12–16 |
-| IX | Meta-Systems | 9.1–9.3 | 3 |
-| X | System of Systems | — | 1–2 |
-| | **Total** | **~50** | **~44–57** |
-
-## Phase 1 — Hero Diagrams (planned)
-
-Five flagship interactive diagrams to demonstrate the concept:
-
-1. **Belt Mechanics** — animated discrete item slot simulator
-2. **Recipe DAG** — interactive full production dependency graph
-3. **Pollution Diffusion** — cellular automaton heatmap simulation
-4. **Quality Grind** — Markov chain visualizer for SA quality system
-5. **System of Systems** — master feedback loop diagram with navigation
+| Part | Title | Diagrams |
+|------|-------|----------|
+| I | Simulation Core | 3 |
+| II | Transport & Logistics | 9 |
+| III | Production | 6 |
+| IV | Energy | 5 |
+| V | Oil Refining | 1 |
+| VI | Combat & Pollution | 4 |
+| VII | Circuit Network | 2 |
+| VIII | Map Generation | 1 |
+| IX | Space Age | 6 |
+| X | Vehicles & Trains | 2 |
+| XI | Meta & Analysis | 5 |
+| | **Total** | **44** |
 
 ## Legal
 
@@ -178,7 +207,7 @@ See [LICENSE-CODE.md](LICENSE-CODE.md), [LICENSE-CONTENT.md](LICENSE-CONTENT.md)
 
 ## Contributing
 
-Not yet open for contributions (planning phase). Once Phase 1 begins, contribution guidelines will be published.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for setup instructions, project structure, widget creation guide, translation guidelines, and code style conventions.
 
 ## Links
 
