@@ -38,6 +38,17 @@ const widgets: Record<string, { loader: () => Promise<{ default: React.Component
   'new-machines': { loader: () => import('../widgets/new-machines/NewMachines'), titleKey: 'machines.title' },
   'planet-chains': { loader: () => import('../widgets/planet-chains/PlanetChains'), titleKey: 'planet.title' },
   'biter-ai': { loader: () => import('../widgets/biter-ai/BiterAI'), titleKey: 'biter.title' },
+  'common-ratios': { loader: () => import('../widgets/common-ratios/CommonRatios'), titleKey: 'ratios.title' },
+  'oil-refining': { loader: () => import('../widgets/oil-refining/OilRefining'), titleKey: 'oil.title' },
+  'power-steam': { loader: () => import('../widgets/power-steam/PowerSteam'), titleKey: 'steam.title' },
+  'cargo-wagon': { loader: () => import('../widgets/cargo-wagon/CargoWagon'), titleKey: 'cargo.title' },
+  'fluid-wagon': { loader: () => import('../widgets/fluid-wagon/FluidWagon'), titleKey: 'fluidWagon.title' },
+  'material-processing': { loader: () => import('../widgets/material-processing/MaterialProcessing'), titleKey: 'material.title' },
+  'prod-module-payoff': { loader: () => import('../widgets/prod-module-payoff/ProdModulePayoff'), titleKey: 'prodModule.title' },
+  'balancers': { loader: () => import('../widgets/balancers/Balancers'), titleKey: 'balancer.title' },
+  'inserter-capacity': { loader: () => import('../widgets/inserter-capacity/InserterCapacity'), titleKey: 'inserterCap.title' },
+  'vehicle-fuel': { loader: () => import('../widgets/vehicle-fuel/VehicleFuel'), titleKey: 'vehicleFuel.title' },
+  'train-colors': { loader: () => import('../widgets/train-colors/TrainColors'), titleKey: 'trainColor.title' },
 }
 
 export const DIAGRAM_ORDER = Object.keys(widgets)

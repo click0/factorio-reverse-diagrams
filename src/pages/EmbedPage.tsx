@@ -36,6 +36,17 @@ const widgetLoaders: Record<string, () => Promise<{ default: React.ComponentType
   'new-machines': () => import('../widgets/new-machines/NewMachines'),
   'planet-chains': () => import('../widgets/planet-chains/PlanetChains'),
   'biter-ai': () => import('../widgets/biter-ai/BiterAI'),
+  'common-ratios': () => import('../widgets/common-ratios/CommonRatios'),
+  'oil-refining': () => import('../widgets/oil-refining/OilRefining'),
+  'power-steam': () => import('../widgets/power-steam/PowerSteam'),
+  'cargo-wagon': () => import('../widgets/cargo-wagon/CargoWagon'),
+  'fluid-wagon': () => import('../widgets/fluid-wagon/FluidWagon'),
+  'material-processing': () => import('../widgets/material-processing/MaterialProcessing'),
+  'prod-module-payoff': () => import('../widgets/prod-module-payoff/ProdModulePayoff'),
+  'balancers': () => import('../widgets/balancers/Balancers'),
+  'inserter-capacity': () => import('../widgets/inserter-capacity/InserterCapacity'),
+  'vehicle-fuel': () => import('../widgets/vehicle-fuel/VehicleFuel'),
+  'train-colors': () => import('../widgets/train-colors/TrainColors'),
 }
 
 const lazyCache = new Map<string, React.LazyExoticComponent<React.ComponentType>>()

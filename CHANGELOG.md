@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.50.0] - 2026-04-14
+
+### Added
+- **Common Ratios widget** — interactive production ratio calculator: green/red/blue circuit, steel, rocket fuel, science pack ratios; assembler tier selector (1/2/3/EM Plant); productivity module toggle with automatic recalculation
+- **Oil Refining widget** — SVG oil processing flow diagram: Basic/Advanced/Coal Liquefaction modes; target petroleum slider; calculates refineries, heavy/light cracking plants, water consumption; flow arrows scaled by throughput
+- **Power Steam widget** — steam power ratio calculator: target MW slider (1-360); auto-calculates offshore pumps, boilers, steam engines; fuel type selector (wood/coal/solid/rocket/nuclear); SVG chain diagram
+- **Cargo Wagon Transfer widget** — wagon loading throughput calculator: 6 inserter types, stack bonus research (0-7), item stack size; calculates items/sec and fill time; comparison table
+- **Fluid Wagon Transfer widget** — fluid wagon throughput calculator: pump count (1-3), wagon count, pipe distance comparison; SVG wagon diagram; wagon vs pipe throughput bar chart
+- **Material Processing widget** — smelting time calculator: 4 furnace types (stone/steel/electric/foundry), furnace count slider; table with all smelting recipes, effective time, items/min
+- **Prod Module Payoffs widget** — productivity module ROI calculator: module tier, recipe, machine selection; SVG break-even chart (with/without modules); crafts and time to payoff
+- **Balancers widget** — belt balancer visual diagrams: 6 configurations (1→2 through 8→8); SVG schematic with splitters; properties: input/output balanced, throughput unlimited
+- **Inserter Capacity Bonus widget** — inserter stack size by research level: slider 0-7; table with all inserter types, stack size, throughput; SVG throughput bar chart
+- **Vehicle Fuel Bonus widget** — fuel speed/acceleration bonus table: 4 vehicles, 5 fuel types; effective speed calculation; SVG horizontal bar chart comparison
+- **Train Colors widget** — train color palette: 14 preset cargo colors with locomotive SVG preview; custom RGB sliders; Factorio float-format color code with copy button
+- Full Ukrainian translations for all 11 new widgets
+- 44 total diagrams
+
 ## [0.44.0] - 2026-04-13
 
 ### Added

@@ -35,6 +35,17 @@ const diagrams = [
   { id: 'new-machines', labelKey: 'nav.newMachines' },
   { id: 'planet-chains', labelKey: 'nav.planetChains' },
   { id: 'biter-ai', labelKey: 'nav.biter' },
+  { id: 'common-ratios', labelKey: 'nav.ratios' },
+  { id: 'oil-refining', labelKey: 'nav.oil' },
+  { id: 'power-steam', labelKey: 'nav.steam' },
+  { id: 'cargo-wagon', labelKey: 'nav.cargo' },
+  { id: 'fluid-wagon', labelKey: 'nav.fluidWagon' },
+  { id: 'material-processing', labelKey: 'nav.material' },
+  { id: 'prod-module-payoff', labelKey: 'nav.prodModule' },
+  { id: 'balancers', labelKey: 'nav.balancer' },
+  { id: 'inserter-capacity', labelKey: 'nav.inserterCap' },
+  { id: 'vehicle-fuel', labelKey: 'nav.vehicleFuel' },
+  { id: 'train-colors', labelKey: 'nav.trainColor' },
 ]
 
 interface SidebarProps {
@@ -82,7 +93,7 @@ export default function Sidebar({ onClose }: SidebarProps) {
           </button>
         </div>
         <div style={{ marginTop: 8, lineHeight: 1.6 }}>
-          <span style={{ color: 'var(--accent)', fontSize: 11 }}>v0.44</span>
+          <span style={{ color: 'var(--accent)', fontSize: 11 }}>v0.50</span>
           <br />
           <a href="https://github.com/click0/factorio-reverse-diagrams" target="_blank" rel="noopener noreferrer"
             style={{ fontSize: 10, color: 'var(--text-muted)', textDecoration: 'none' }}>
