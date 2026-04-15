@@ -187,19 +187,19 @@ export function advanceTick(state: BiterState, evolution: number, pollutionRate:
     for (let dx = -2; dx <= 2; dx++) {
       const r = factoryY + dy, c = factoryX + dx
       if (r >= 0 && r < GRID && c >= 0 && c < GRID) {
-        pollution[r * GRID + c] += pollutionRate * 0.001
+        pollution[r * GRID + c] += pollutionRate * 0.005
       }
     }
   }
 
-  // 2. Pollution diffusion (simplified)
+  // 2. Pollution diffusion (simplified, multiple passes for faster spread)
   const nextPoll = new Float64Array(pollution.length)
   for (let y = 0; y < GRID; y++) {
     for (let x = 0; x < GRID; x++) {
       const i = y * GRID + x
       const val = pollution[i]
       if (val <= 0) continue
-      const spread = val * 0.02
+      const spread = val * 0.08
       let remaining = val
       for (const [dx, dy] of [[0, -1], [0, 1], [-1, 0], [1, 0]]) {
         const nx = x + dx, ny = y + dy
@@ -208,7 +208,7 @@ export function advanceTick(state: BiterState, evolution: number, pollutionRate:
           remaining -= spread
         }
       }
-      nextPoll[i] += Math.max(0, remaining * 0.98) // slight decay
+      nextPoll[i] += Math.max(0, remaining * 0.97) // slight decay
     }
   }
 
@@ -220,7 +220,7 @@ export function advanceTick(state: BiterState, evolution: number, pollutionRate:
 
     nest.spawnCooldown = Math.max(0, nest.spawnCooldown - 1)
 
-    const spawnThreshold = 0.5 / (1 + evolution) // higher evo = spawn more often
+    const spawnThreshold = 0.1 / (1 + evolution) // higher evo = spawn more often
     if (nest.absorbed > spawnThreshold && nest.spawnCooldown <= 0 && biters.length < 30) {
       const groupSize = 1 + Math.floor(evolution * 3)
       for (let g = 0; g < groupSize; g++) {

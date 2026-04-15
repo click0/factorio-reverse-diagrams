@@ -78,6 +78,7 @@ export default function EntityLifecycle() {
   const { t } = useTranslation()
   const [typeIdx, setTypeIdx] = useState(0)
   const [highlightState, setHighlightState] = useState<EntityState | null>(null)
+  const [zoom, setZoom] = useState(1)
 
   const entityType = ENTITY_TYPES[typeIdx]
   const states = entityType.states
@@ -94,6 +95,16 @@ export default function EntityLifecycle() {
 
   const stateIndex = (s: EntityState) => states.indexOf(s)
 
+  // ViewBox with zoom centered on the diagram
+  const vbW = SVG_W / zoom
+  const vbH = SVG_H / zoom
+  const vbX = (SVG_W - vbW) / 2
+  const vbY = (SVG_H - vbH) / 2
+
+  const zoomIn = () => setZoom(z => Math.min(4, z * 1.25))
+  const zoomOut = () => setZoom(z => Math.max(0.5, z / 1.25))
+  const zoomReset = () => setZoom(1)
+
   return (
     <div>
       <div className="controls-row">
@@ -106,9 +117,16 @@ export default function EntityLifecycle() {
             </button>
           ))}
         </div>
+        <div className="control-group">
+          <label>{t('entity.zoom')}:</label>
+          <button className="btn" onClick={zoomOut} title={t('entity.zoomOut')} aria-label={t('entity.zoomOut')}>&minus;</button>
+          <button className="btn" onClick={zoomReset} title={t('entity.zoomReset')}
+            style={{ minWidth: 52, fontFamily: 'monospace' }}>{Math.round(zoom * 100)}%</button>
+          <button className="btn" onClick={zoomIn} title={t('entity.zoomIn')} aria-label={t('entity.zoomIn')}>+</button>
+        </div>
       </div>
 
-      <svg viewBox={`0 0 ${SVG_W} ${SVG_H}`} style={{ width: '100%', maxWidth: SVG_W, background: '#0d1117', borderRadius: 4, marginTop: 8 }}>
+      <svg viewBox={`${vbX} ${vbY} ${vbW} ${vbH}`} style={{ width: '100%', maxWidth: SVG_W, background: '#0d1117', borderRadius: 4, marginTop: 8 }}>
         <defs>
           <marker id="lifecycle-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
             <polygon points="0 0, 8 3, 0 6" fill="#ffffff40" />

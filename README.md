@@ -1,5 +1,7 @@
 # Factorio Reverse Diagrams
 
+**[Українська версія (README_uk.md)](README_uk.md)**
+
 > Mapping and translating the rules of Factorio's simulation into interactive explorable explanations.
 
 Inspired by [Chaim Gingold's SimCity Reverse Diagrams (2016)](assets/reference/SimCity_Reverse_Diagrams_Gingold_2016.pdf) and the explorable explanation tradition of [Bret Victor](https://worrydream.com/), [Bartosz Ciechanowski](https://ciechanow.ski/), [Red Blob Games](https://www.redblobgames.com/), and [Nicky Case](https://ncase.me/).
@@ -153,6 +155,7 @@ https://click0.github.io/factorio-reverse-diagrams/#/embed/{widget-id}
 factorio-reverse-diagrams/
 │
 ├── README.md                          ← You are here
+├── README_uk.md                       ← Ukrainian version
 ├── CONTRIBUTING.md                    ← Contribution guide
 ├── LICENSE-CODE.md                    ← BSD 3-Clause (code)
 ├── LICENSE-CONTENT.md                 ← CC BY-NC-SA 4.0 (text, diagrams, PDFs)
