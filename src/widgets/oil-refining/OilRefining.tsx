@@ -259,27 +259,35 @@ export default function OilRefining() {
     )
   }, [calc])
 
-  const svgW = 880
-  const svgH = 380
+  const svgW = 920
+  const svgH = 420
 
-  // Layout: 4 columns with ample spacing
-  //  col 1: Input labels       x=10-90
-  //  col 2: Refinery box       x=180-340
-  //  col 3: Cracking boxes     x=460-620
-  //  col 4: Petroleum output   x=720-860
-  const refineryBox = { x: 180, y: 150, w: 160, h: 80 }
-  const heavyCrackBox = { x: 460, y: 70, w: 160, h: 60 }
-  const lightCrackBox = { x: 460, y: 250, w: 160, h: 60 }
-  const outputBox = { x: 720, y: 165, w: 140, h: 80 }
+  // Refinery as tall vertical rectangle (matches in-game sprite: 2 fluid inputs one side, 3 fluid outputs other side)
+  const refineryBox = { x: 210, y: 80, w: 160, h: 260 }
+  // Cracking plants: small boxes, heavy on top, light on bottom
+  const heavyCrackBox = { x: 540, y: 90, w: 150, h: 70 }
+  const lightCrackBox = { x: 540, y: 260, w: 150, h: 70 }
+  // Petroleum output on the right
+  const outputBox = { x: 790, y: 170, w: 120, h: 100 }
 
-  // Fixed Y-lanes for inputs
-  const laneY = {
-    crude: refineryBox.y + 20,
-    water: refineryBox.y + 40,
-    coal: refineryBox.y + 20,
-    steam: refineryBox.y + 40,
-    heavyRecycle: refineryBox.y + 60,
+  // Refinery left-side input ports (up to 3 stacked)
+  const inputPorts = {
+    top: refineryBox.y + 70,      // 150 — used by: advanced=(nothing), coal-liq=coal
+    mid: refineryBox.y + 130,     // 210 — advanced=crude, coal-liq=steam
+    bot: refineryBox.y + 190,     // 270 — advanced=water, coal-liq=heavy-recycle
   }
+  // Refinery right-side output ports (3 fixed: heavy top, petroleum middle, light bottom)
+  const outputPorts = {
+    heavy: refineryBox.y + 40,       // 120
+    petroleum: refineryBox.y + 130,  // 210
+    light: refineryBox.y + 220,      // 300
+  }
+
+  // Cracking plant ports
+  const heavyCrackIn = { x: heavyCrackBox.x, y: heavyCrackBox.y + heavyCrackBox.h / 2 }
+  const heavyCrackOut = { x: heavyCrackBox.x + heavyCrackBox.w, y: heavyCrackBox.y + heavyCrackBox.h / 2 }
+  const lightCrackIn = { x: lightCrackBox.x, y: lightCrackBox.y + lightCrackBox.h / 2 }
+  const lightCrackOut = { x: lightCrackBox.x + lightCrackBox.w, y: lightCrackBox.y + lightCrackBox.h / 2 }
 
   const hasHeavyCracking = calc.heavyCrackers > 0
   const hasLightCracking = calc.lightCrackers > 0
@@ -333,11 +341,37 @@ export default function OilRefining() {
           {/* Background */}
           <rect width={svgW} height={svgH} fill="var(--bg-surface)" rx={6} />
 
-          {/* ── Column 1: Input labels and arrows to refinery ── */}
+          {/* ── Refinery box (tall vertical, game-like) ── */}
+          <RefineryBox
+            box={refineryBox}
+            label={t('oil.refineries')}
+            count={calc.refineries}
+            inputPorts={inputPorts}
+            outputPorts={outputPorts}
+            inputs={
+              isCoalLiq
+                ? [{ port: 'top', color: FLUID_COLORS.coal },
+                   { port: 'mid', color: FLUID_COLORS.steam },
+                   { port: 'bot', color: FLUID_COLORS.heavy }]
+                : mode === 'basic'
+                ? [{ port: 'mid', color: FLUID_COLORS.crude }]
+                : [{ port: 'mid', color: FLUID_COLORS.crude },
+                   { port: 'bot', color: FLUID_COLORS.water }]
+            }
+            outputs={
+              mode === 'basic'
+                ? [{ port: 'petroleum', color: FLUID_COLORS.petroleum }]
+                : [{ port: 'heavy', color: FLUID_COLORS.heavy },
+                   { port: 'petroleum', color: FLUID_COLORS.petroleum },
+                   { port: 'light', color: FLUID_COLORS.light }]
+            }
+          />
+
+          {/* ── Left-side input arrows ── */}
           {mode === 'basic' && (
             <InputArrow
-              labelX={100} y={laneY.crude}
-              x1={100} x2={refineryBox.x}
+              labelX={110} y={inputPorts.mid}
+              x1={110} x2={refineryBox.x - 6}
               color={FLUID_COLORS.crude}
               label={t('oil.crude')}
               value={calc.flows.crudeIn}
@@ -348,16 +382,16 @@ export default function OilRefining() {
           {mode === 'advanced' && (
             <>
               <InputArrow
-                labelX={100} y={laneY.crude}
-                x1={100} x2={refineryBox.x}
+                labelX={110} y={inputPorts.mid}
+                x1={110} x2={refineryBox.x - 6}
                 color={FLUID_COLORS.crude}
                 label={t('oil.crude')}
                 value={calc.flows.crudeIn}
                 width={flowWidth(calc.flows.crudeIn, maxFlow)}
               />
               <InputArrow
-                labelX={100} y={laneY.water}
-                x1={100} x2={refineryBox.x}
+                labelX={110} y={inputPorts.bot}
+                x1={110} x2={refineryBox.x - 6}
                 color={FLUID_COLORS.water}
                 label={t('oil.water')}
                 value={calc.flows.waterRefinery}
@@ -369,16 +403,16 @@ export default function OilRefining() {
           {isCoalLiq && (
             <>
               <InputArrow
-                labelX={100} y={laneY.coal}
-                x1={100} x2={refineryBox.x}
+                labelX={110} y={inputPorts.top}
+                x1={110} x2={refineryBox.x - 6}
                 color={FLUID_COLORS.coal}
                 label={t('oil.coal')}
                 value={calc.flows.coalIn}
                 width={flowWidth(calc.flows.coalIn, maxFlow)}
               />
               <InputArrow
-                labelX={100} y={laneY.steam}
-                x1={100} x2={refineryBox.x}
+                labelX={110} y={inputPorts.mid}
+                x1={110} x2={refineryBox.x - 6}
                 color={FLUID_COLORS.steam}
                 label={t('oil.steam')}
                 value={calc.flows.steamIn}
@@ -386,8 +420,8 @@ export default function OilRefining() {
               />
               {calc.flows.heavyRecycleIn > 0 && (
                 <InputArrow
-                  labelX={100} y={laneY.heavyRecycle}
-                  x1={100} x2={refineryBox.x}
+                  labelX={110} y={inputPorts.bot}
+                  x1={110} x2={refineryBox.x - 6}
                   color={FLUID_COLORS.heavy}
                   label={t('oil.heavy')}
                   value={calc.flows.heavyRecycleIn}
@@ -397,13 +431,7 @@ export default function OilRefining() {
             </>
           )}
 
-          {/* ── Column 2: Refinery box ── */}
-          <ProcessBox
-            x={refineryBox.x} y={refineryBox.y} w={refineryBox.w} h={refineryBox.h}
-            label={t('oil.refineries')} count={calc.refineries}
-          />
-
-          {/* ── Column 3: Cracking boxes ── */}
+          {/* ── Cracking boxes ── */}
           {hasHeavyCracking && (
             <ProcessBox
               x={heavyCrackBox.x} y={heavyCrackBox.y} w={heavyCrackBox.w} h={heavyCrackBox.h}
@@ -417,28 +445,28 @@ export default function OilRefining() {
             />
           )}
 
-          {/* ── Column 4: Petroleum output ── */}
+          {/* ── Petroleum output box ── */}
           <rect x={outputBox.x} y={outputBox.y} width={outputBox.w} height={outputBox.h}
             rx={6} fill="#1a2a1a" stroke={FLUID_COLORS.petroleum} strokeWidth={2} />
-          <text x={outputBox.x + outputBox.w / 2} y={outputBox.y + 20} textAnchor="middle"
+          <text x={outputBox.x + outputBox.w / 2} y={outputBox.y + 22} textAnchor="middle"
             fill="#ffffffcc" fontSize={12} fontWeight={700}>
             {t('oil.petroleum')}
           </text>
-          <text x={outputBox.x + outputBox.w / 2} y={outputBox.y + 46} textAnchor="middle"
-            fill={FLUID_COLORS.petroleum} fontSize={20} fontWeight={700} fontFamily="monospace">
+          <text x={outputBox.x + outputBox.w / 2} y={outputBox.y + 54} textAnchor="middle"
+            fill={FLUID_COLORS.petroleum} fontSize={22} fontWeight={700} fontFamily="monospace">
             {(calc.flows.refineryPetroleumOut + calc.flows.lightCrackPetroleumOut).toFixed(1)}
           </text>
-          <text x={outputBox.x + outputBox.w / 2} y={outputBox.y + 64} textAnchor="middle"
+          <text x={outputBox.x + outputBox.w / 2} y={outputBox.y + 74} textAnchor="middle"
             fill="#ffffff80" fontSize={10}>
             {t('oil.unitsPerSec')}
           </text>
 
-          {/* ── Connections: Refinery → Cracking → Output ── */}
-          {/* Heavy output: refinery right → heavyCrack left */}
+          {/* ── Connections: Refinery right-side ports → Cracking / Output ── */}
+          {/* Heavy output → Heavy Crack */}
           {hasHeavyCracking && (
             <FlowLine
-              x1={refineryBox.x + refineryBox.w} y1={refineryBox.y + 20}
-              x2={heavyCrackBox.x} y2={heavyCrackBox.y + heavyCrackBox.h / 2}
+              x1={refineryBox.x + refineryBox.w + 6} y1={outputPorts.heavy}
+              x2={heavyCrackIn.x - 4} y2={heavyCrackIn.y}
               color={FLUID_COLORS.heavy}
               width={flowWidth(calc.flows.refineryHeavyOut, maxFlow)}
               label={calc.flows.refineryHeavyOut.toFixed(1)}
@@ -446,11 +474,11 @@ export default function OilRefining() {
             />
           )}
 
-          {/* Light output from refinery: refinery right → lightCrack left */}
-          {hasLightCracking && (
+          {/* Light output → Light Crack (for advanced/coal-liq) */}
+          {hasLightCracking && calc.flows.refineryLightOut > 0 && (
             <FlowLine
-              x1={refineryBox.x + refineryBox.w} y1={refineryBox.y + refineryBox.h - 20}
-              x2={lightCrackBox.x} y2={lightCrackBox.y + lightCrackBox.h / 2}
+              x1={refineryBox.x + refineryBox.w + 6} y1={outputPorts.light}
+              x2={lightCrackIn.x - 4} y2={lightCrackIn.y}
               color={FLUID_COLORS.light}
               width={flowWidth(calc.flows.refineryLightOut, maxFlow)}
               label={calc.flows.refineryLightOut.toFixed(1)}
@@ -458,24 +486,22 @@ export default function OilRefining() {
             />
           )}
 
-          {/* Heavy-crack output: → lightCrack (light joins) */}
-          {hasHeavyCracking && hasLightCracking && (
-            <FlowLine
-              x1={heavyCrackBox.x + heavyCrackBox.w / 2} y1={heavyCrackBox.y + heavyCrackBox.h}
-              x2={lightCrackBox.x + lightCrackBox.w / 2} y2={lightCrackBox.y}
+          {/* Heavy Crack output (light) → Light Crack (goes down & in) */}
+          {hasHeavyCracking && hasLightCracking && calc.flows.heavyCrackLightOut > 0 && (
+            <ElbowFlow
+              x1={heavyCrackOut.x + 4} y1={heavyCrackOut.y}
+              x2={lightCrackIn.x - 4} y2={lightCrackIn.y - 12}
               color={FLUID_COLORS.light}
               width={flowWidth(calc.flows.heavyCrackLightOut, maxFlow)}
               label={calc.flows.heavyCrackLightOut.toFixed(1)}
-              labelOffset={-8}
-              labelAnchor="start"
             />
           )}
 
-          {/* Direct petroleum from refinery to output */}
+          {/* Direct petroleum from refinery middle-right → output box (straight line, no collision) */}
           {calc.flows.refineryPetroleumOut > 0 && (
             <FlowLine
-              x1={refineryBox.x + refineryBox.w} y1={refineryBox.y + refineryBox.h / 2}
-              x2={outputBox.x} y2={outputBox.y + outputBox.h / 2 - 8}
+              x1={refineryBox.x + refineryBox.w + 6} y1={outputPorts.petroleum}
+              x2={outputBox.x - 4} y2={outputBox.y + outputBox.h / 2 - 12}
               color={FLUID_COLORS.petroleum}
               width={flowWidth(calc.flows.refineryPetroleumOut, maxFlow)}
               label={calc.flows.refineryPetroleumOut.toFixed(1)}
@@ -483,11 +509,11 @@ export default function OilRefining() {
             />
           )}
 
-          {/* Light crack petroleum → output */}
+          {/* Light Crack petroleum output → output box */}
           {hasLightCracking && calc.flows.lightCrackPetroleumOut > 0 && (
             <FlowLine
-              x1={lightCrackBox.x + lightCrackBox.w} y1={lightCrackBox.y + lightCrackBox.h / 2}
-              x2={outputBox.x} y2={outputBox.y + outputBox.h / 2 + 8}
+              x1={lightCrackOut.x + 4} y1={lightCrackOut.y}
+              x2={outputBox.x - 4} y2={outputBox.y + outputBox.h / 2 + 12}
               color={FLUID_COLORS.petroleum}
               width={flowWidth(calc.flows.lightCrackPetroleumOut, maxFlow)}
               label={calc.flows.lightCrackPetroleumOut.toFixed(1)}
@@ -495,7 +521,7 @@ export default function OilRefining() {
             />
           )}
 
-          {/* Water inputs — vertical from top, labeled above */}
+          {/* Water inputs to crackers — vertical arrows from outside */}
           {hasHeavyCracking && calc.flows.waterHeavyCrack > 0 && (
             <WaterInput
               x={heavyCrackBox.x + heavyCrackBox.w / 2}
@@ -519,11 +545,11 @@ export default function OilRefining() {
           {/* Balance indicators below output */}
           {mode !== 'basic' && (
             <>
-              <text x={outputBox.x + outputBox.w / 2} y={outputBox.y + outputBox.h + 18}
+              <text x={outputBox.x + outputBox.w / 2} y={outputBox.y + outputBox.h + 20}
                 textAnchor="middle" fill={balanceColor(calc.heavySurplus)} fontSize={10}>
                 {t('oil.heavy')}: {balanceLabel(calc.heavySurplus)}
               </text>
-              <text x={outputBox.x + outputBox.w / 2} y={outputBox.y + outputBox.h + 34}
+              <text x={outputBox.x + outputBox.w / 2} y={outputBox.y + outputBox.h + 36}
                 textAnchor="middle" fill={balanceColor(calc.lightSurplus)} fontSize={10}>
                 {t('oil.light')}: {balanceLabel(calc.lightSurplus)}
               </text>
@@ -574,6 +600,89 @@ function ProcessBox({ x, y, w, h, label, count }: { x: number; y: number; w: num
         fill="var(--accent)" fontSize={14} fontWeight={700} fontFamily="monospace">
         x{count}
       </text>
+    </g>
+  )
+}
+
+function RefineryBox({ box, label, count, inputPorts, outputPorts, inputs, outputs }: {
+  box: { x: number; y: number; w: number; h: number }
+  label: string
+  count: number
+  inputPorts: { top: number; mid: number; bot: number }
+  outputPorts: { heavy: number; petroleum: number; light: number }
+  inputs: { port: 'top' | 'mid' | 'bot'; color: string }[]
+  outputs: { port: 'heavy' | 'petroleum' | 'light'; color: string }[]
+}) {
+  const PIPE_LEN = 10
+  const PIPE_R = 6
+  return (
+    <g>
+      {/* Main body */}
+      <rect x={box.x} y={box.y} width={box.w} height={box.h} rx={8}
+        fill="#2a2a3e" stroke="var(--accent)" strokeWidth={2} />
+
+      {/* Top decorative band */}
+      <rect x={box.x + 8} y={box.y + 8} width={box.w - 16} height={24} rx={4}
+        fill="#1a1a2e" stroke="var(--border)" strokeWidth={1} />
+
+      {/* Label + count */}
+      <text x={box.x + box.w / 2} y={box.y + 24} textAnchor="middle"
+        fill="#ffffffcc" fontSize={12} fontWeight={700}>
+        {label}
+      </text>
+      <text x={box.x + box.w / 2} y={box.y + box.h / 2 + 6} textAnchor="middle"
+        fill="var(--accent)" fontSize={32} fontWeight={700} fontFamily="monospace">
+        x{count}
+      </text>
+
+      {/* Left-side input pipe stubs */}
+      {inputs.map(({ port, color }) => {
+        const py = inputPorts[port]
+        return (
+          <g key={`in-${port}`}>
+            <line x1={box.x - PIPE_LEN} y1={py} x2={box.x} y2={py}
+              stroke={color} strokeWidth={PIPE_R * 2} strokeLinecap="butt" />
+            <circle cx={box.x - PIPE_LEN} cy={py} r={PIPE_R + 1}
+              fill="#1a1a2e" stroke={color} strokeWidth={1.5} />
+          </g>
+        )
+      })}
+
+      {/* Right-side output pipe stubs */}
+      {outputs.map(({ port, color }) => {
+        const py = outputPorts[port]
+        return (
+          <g key={`out-${port}`}>
+            <line x1={box.x + box.w} y1={py} x2={box.x + box.w + PIPE_LEN} y2={py}
+              stroke={color} strokeWidth={PIPE_R * 2} strokeLinecap="butt" />
+            <circle cx={box.x + box.w + PIPE_LEN} cy={py} r={PIPE_R + 1}
+              fill="#1a1a2e" stroke={color} strokeWidth={1.5} />
+          </g>
+        )
+      })}
+    </g>
+  )
+}
+
+function ElbowFlow({ x1, y1, x2, y2, color, width, label }: {
+  x1: number; y1: number; x2: number; y2: number
+  color: string; width: number; label: string
+}) {
+  // L-shaped path: horizontal first, then vertical down to target
+  const midX = x2
+  const path = `M ${x1} ${y1} L ${midX} ${y1} L ${x2} ${y2}`
+  return (
+    <g>
+      <path d={path} fill="none" stroke={color} strokeWidth={width}
+        strokeLinecap="round" strokeLinejoin="round"
+        markerEnd="url(#oil-arrow)" opacity={0.85} />
+      {label && (
+        <text x={midX + 6} y={(y1 + y2) / 2} textAnchor="start"
+          fill="#ffffffcc" fontSize={10} fontFamily="monospace" fontWeight={600}
+          style={{ paintOrder: 'stroke' }} stroke="#0d111788" strokeWidth={3}>
+          {label}
+        </text>
+      )}
     </g>
   )
 }
