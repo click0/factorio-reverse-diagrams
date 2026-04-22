@@ -194,7 +194,6 @@ function calculate(mode: Mode, targetPetroleum: number): FlowCalc {
   const totalLight = refineries * lightOut + actualLightFromCrack
   const lightCrackers = totalLight > 0 ? Math.ceil(totalLight / lightCrackConsumePerPlant) : 0
 
-  const actualPetroleum = refineries * petroOut + lightCrackers * lightCrackPetroPerPlant
   const heavyProduced = refineries * heavyOut
   const heavyConsumed = heavyCrackers * heavyCrackConsumePerPlant + refineries * heavyInputPerRefinery
   const heavySurplus = heavyProduced - heavyConsumed
@@ -283,9 +282,8 @@ export default function OilRefining() {
     light: refineryBox.y + 220,      // 300
   }
 
-  // Cracking plant ports
+  // Cracking plant ports (heavy-crack light output exits BOTTOM not right — see VerticalFlow below)
   const heavyCrackIn = { x: heavyCrackBox.x, y: heavyCrackBox.y + heavyCrackBox.h / 2 }
-  const heavyCrackOut = { x: heavyCrackBox.x + heavyCrackBox.w, y: heavyCrackBox.y + heavyCrackBox.h / 2 }
   const lightCrackIn = { x: lightCrackBox.x, y: lightCrackBox.y + lightCrackBox.h / 2 }
   const lightCrackOut = { x: lightCrackBox.x + lightCrackBox.w, y: lightCrackBox.y + lightCrackBox.h / 2 }
 
@@ -486,11 +484,12 @@ export default function OilRefining() {
             />
           )}
 
-          {/* Heavy Crack output (light) → Light Crack (goes down & in) */}
+          {/* Heavy Crack output (light) → Light Crack — vertical drop between box centers */}
           {hasHeavyCracking && hasLightCracking && calc.flows.heavyCrackLightOut > 0 && (
-            <ElbowFlow
-              x1={heavyCrackOut.x + 4} y1={heavyCrackOut.y}
-              x2={lightCrackIn.x - 4} y2={lightCrackIn.y - 12}
+            <VerticalFlow
+              x={heavyCrackBox.x + heavyCrackBox.w / 2}
+              y1={heavyCrackBox.y + heavyCrackBox.h}
+              y2={lightCrackBox.y - 4}
               color={FLUID_COLORS.light}
               width={flowWidth(calc.flows.heavyCrackLightOut, maxFlow)}
               label={calc.flows.heavyCrackLightOut.toFixed(1)}
@@ -664,20 +663,17 @@ function RefineryBox({ box, label, count, inputPorts, outputPorts, inputs, outpu
   )
 }
 
-function ElbowFlow({ x1, y1, x2, y2, color, width, label }: {
-  x1: number; y1: number; x2: number; y2: number
+function VerticalFlow({ x, y1, y2, color, width, label }: {
+  x: number; y1: number; y2: number
   color: string; width: number; label: string
 }) {
-  // L-shaped path: horizontal first, then vertical down to target
-  const midX = x2
-  const path = `M ${x1} ${y1} L ${midX} ${y1} L ${x2} ${y2}`
   return (
     <g>
-      <path d={path} fill="none" stroke={color} strokeWidth={width}
-        strokeLinecap="round" strokeLinejoin="round"
+      <line x1={x} y1={y1} x2={x} y2={y2}
+        stroke={color} strokeWidth={width} strokeLinecap="round"
         markerEnd="url(#oil-arrow)" opacity={0.85} />
       {label && (
-        <text x={midX + 6} y={(y1 + y2) / 2} textAnchor="start"
+        <text x={x + 8} y={(y1 + y2) / 2 + 3} textAnchor="start"
           fill="#ffffffcc" fontSize={10} fontFamily="monospace" fontWeight={600}
           style={{ paintOrder: 'stroke' }} stroke="#0d111788" strokeWidth={3}>
           {label}
